@@ -7,7 +7,7 @@ from dependencies.ziptools import ziptools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
 
-branch = 'master'
+branch = 'stable'
 user = 'kodiondemand'
 repo = 'addon'
 addonDir = xbmc.translatePath("special://home/addons/") + "plugin.video.kod/"
@@ -16,7 +16,7 @@ trackingFile = "last_commit.txt"
 
 
 def updateFromZip():
-    dp = platformtools.dialog_progress_bg('Kodi on Demand', 'Aggiornamento in corso...')
+    dp = platformtools.dialog_progress_bg('Kodi on Demand', 'Installazione in corso...')
     dp.update(0)
 
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
