@@ -2,7 +2,7 @@
 repo per script vari
 
 <b>KoD-Installer</b><br>
-Un installer per kod, una volta installato si auto-avvia e scarica lo zip da github, mentre ti mostra la scehrmata di configurazione iniziale<br>
+Un installer per kod, una volta installato si auto-avvia e scarica lo zip da github, mentre ti mostra la schermata di configurazione iniziale<br>
 
 <b>newVer</b><br>
 Tool interno per pubblicare una nuova major release velocemente, non ancora testato sul campo
