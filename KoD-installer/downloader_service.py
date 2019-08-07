@@ -10,7 +10,7 @@ from threading import Thread
 branch = 'stable'
 user = 'kodiondemand'
 repo = 'addon'
-addonDir = xbmc.translatePath("special://home/addons/") + "plugin.video.kod/"
+addonDir = os.path.dirname(os.path.abspath(__file__))
 maxPage = 5  # le api restituiscono 30 commit per volta, quindi se si è rimasti troppo indietro c'è bisogno di andare avanti con le pagine
 trackingFile = "last_commit.txt"
 
