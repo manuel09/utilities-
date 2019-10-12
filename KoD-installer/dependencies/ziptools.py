@@ -24,13 +24,13 @@ class ziptools:
 
         for nameo in zf.namelist():
             name = nameo.replace(':', '_').replace('<', '_').replace('>', '_').replace('|', '_').replace('"', '_').replace('?', '_').replace('*', '_')
-            logger.info("name=%s" % nameo)
+            # logger.info("name=%s" % nameo)
             if not name.endswith('/'):
-                logger.info("no es un directorio")
+                # logger.info("no es un directorio")
                 try:
                     (path, filename) = os.path.split(os.path.join(dir, name))
-                    logger.info("path=%s" % path)
-                    logger.info("name=%s" % name)
+                    # logger.info("path=%s" % path)
+                    # logger.info("name=%s" % name)
                     if folder_to_extract:
                         if path != os.path.join(dir, folder_to_extract):
                             break
@@ -43,7 +43,7 @@ class ziptools:
 
                 else:
                     outfilename = os.path.join(dir, name)
-                logger.info("outfilename=%s" % outfilename)
+                # logger.info("outfilename=%s" % outfilename)
                 try:
                     outfile = open(outfilename, 'wb')
                     outfile.write(zf.read(nameo))

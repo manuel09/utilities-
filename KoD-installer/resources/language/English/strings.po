@@ -1783,7 +1783,7 @@ msgid " and quality %s"
 msgstr ""
 
 msgctxt "#60432"
-msgid "[COLOR %s]No results in this language '%s'%s, click to show without filter[/COLOR]"
+msgid "[B]No results in this language '%s'%s, click to show without filter[/B]"
 msgstr ""
 
 msgctxt "#60433"
@@ -1807,7 +1807,7 @@ msgid "Delete"
 msgstr ""
 
 msgctxt "#60438"
-msgid "¿Enable / disable filter?"
+msgid "Enable / Disable filter?"
 msgstr ""
 
 msgctxt "#60439"
@@ -5606,7 +5606,7 @@ msgid "Dear user, you seem to have problems with ADSL! We suggest you call your 
 msgstr ""
 
 msgctxt "#70722"
-msgid "Dear User, your current DNS do not allow you to reach all ergo sites, not all Channels will work. We recommend that you set up your DNS to take advantage of more channels. Search your favorite search engine how to set them up on your device."
+msgid "Dear User, your current DNS do not allow you to reach all sites, ergo, not all Channels will work, we recommend you, to take advantage of more, to set up the DNS.\nSearch your favorite search engine for\n 1. guides on how to choose a free DNS.\n 2. set it up on your device.\nWe recommend the cloudflare DNS 1.1.1.1 and 1.0.0.1\nAlternatively the Google DNS 8.8.8.8 and 8.8.4.4.\nIf you have a VODAFONE station, enter the modem panel and disable 'Secure DNS' before proceeding.\n"
 msgstr ""
 
 msgctxt "#70723"
@@ -5618,11 +5618,11 @@ msgid "Channel"
 msgstr ""
 
 msgctxt "#70725"
-msgid "Select the language"
+msgid "Select the language of [B]%s[/B] in [B]%s[/B]"
 msgstr ""
 
 msgctxt "#70726"
-msgid "Seleziona la qualità"
+msgid "Select the preferred quality of [B]%s[/B] in [B]%s[/B]"
 msgstr ""
 
 msgctxt "#70727"
@@ -5631,4 +5631,32 @@ msgstr ""
 
 msgctxt "#70728"
 msgid "Include in Global Search"
+msgstr ""
+
+msgctxt "#70729"
+msgid "Always add the highest quality"
+msgstr ""
+
+msgctxt "#70730"
+msgid "Select the renumbering method"
+msgstr ""
+
+msgctxt "#70731"
+msgid "Semi-Automatic"
+msgstr ""
+
+msgctxt "#70732"
+msgid "Manual"
+msgstr ""
+
+msgctxt "#70733"
+msgid "Enter the Season Number"
+msgstr ""
+
+msgctxt "#70734"
+msgid "Select Season Episodes"
+msgstr ""
+
+msgctxt "#70735"
+msgid "%s Special Episode Number"
 msgstr ""
