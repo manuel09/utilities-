@@ -3,7 +3,6 @@ import io
 
 import xbmc, os, shutil
 from dependencies import platformtools, logger, filetools
-from dependencies.ziptools import ziptools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
 
@@ -40,8 +39,9 @@ def updateFromZip():
 
     try:
         hash = fixZipGetHash(localfilename)
-        unzipper = ziptools()
-        unzipper.extract(localfilename, destpathname)
+        import zipfile
+        with zipfile.ZipFile(localfilename, "r") as zip_ref:
+            zip_ref.extractall(destpathname)
     except Exception as e:
         logger.info('Non sono riuscito ad estrarre il file zip')
         logger.info(e)
