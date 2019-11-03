@@ -5,6 +5,7 @@ import xbmc, os, shutil
 from dependencies import platformtools, logger, filetools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
+import urllib
 
 branch = 'stable'
 user = 'kodiondemand'
@@ -14,8 +15,8 @@ maxPage = 5  # le api restituiscono 30 commit per volta, quindi se si è rimasti
 trackingFile = "last_commit.txt"
 
 
-def updateFromZip():
-    dp = platformtools.dialog_progress_bg('Kodi on Demand', 'Installazione in corso...')
+def updateFromZip(message='Installazione in corso...'):
+    dp = platformtools.dialog_progress_bg('Kodi on Demand', message)
     dp.update(0)
 
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
@@ -29,7 +30,6 @@ def updateFromZip():
     remove(localfilename)
     removeTree(destpathname + "addon-" + branch)
 
-    import urllib
     urllib.urlretrieve(remotefilename, localfilename,
                        lambda nb, bs, fs, url=remotefilename: _pbhook(nb, bs, fs, url, dp))
 
@@ -45,12 +45,14 @@ def updateFromZip():
     except Exception as e:
         logger.info('Non sono riuscito ad estrarre il file zip')
         logger.info(e)
+        dp.close()
         return False
 
     dp.update(95)
 
     # puliamo tutto
     removeTree(addonDir)
+    xbmc.sleep(1000)
 
     rename(destpathname + "addon-" + branch, addonDir)
 
@@ -66,35 +68,45 @@ def updateFromZip():
 
 def remove(file):
     if os.path.isfile(file):
-        removed = False
-        while not removed:
-            try:
-                os.remove(file)
-                removed = True
-            except:
-                logger.info('File ' + file + ' NON eliminato')
+        try:
+            os.remove(file)
+        except:
+            logger.info('File ' + file + ' NON eliminato')
 
+
+def onerror(func, path, exc_info):
+    """
+    Error handler for ``shutil.rmtree``.
+
+    If the error is due to an access error (read only file)
+    it attempts to add write permission and then retries.
+
+    If the error is for another reason it re-raises the error.
+
+    Usage : ``shutil.rmtree(path, onerror=onerror)``
+    """
+    import stat
+    if not os.access(path, os.W_OK):
+        # Is the error an access error ?
+        os.chmod(path, stat.S_IWUSR)
+        func(path)
+    else:
+        raise
 
 def removeTree(dir):
     if os.path.isdir(dir):
-        removed = False
-        while not removed:
-            try:
-                shutil.rmtree(dir)
-                removed = True
-            except:
-                logger.info('Cartella ' + dir + ' NON eliminato')
+        try:
+            shutil.rmtree(dir, ignore_errors=False, onerror=onerror)
+        except Exception as e:
+            logger.info('Cartella ' + dir + ' NON eliminata')
+            logger.error(e)
 
 
 def rename(dir1, dir2):
-    renamed = False
-    while not renamed:
-        try:
-            filetools.rename(dir1, dir2)
-            renamed = True
-        except:
-            logger.info('cartella ' + dir1 + ' NON rinominata')
-
+    try:
+        filetools.rename(dir1, dir2)
+    except:
+        logger.info('cartella ' + dir1 + ' NON rinominata')
 
 def fixZipGetHash(zipFile):
     f = io.FileIO(zipFile, 'r+b')
