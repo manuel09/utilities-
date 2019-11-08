@@ -30,8 +30,16 @@ def updateFromZip(message='Installazione in corso...'):
     remove(localfilename)
     removeTree(destpathname + "addon-" + branch)
 
-    urllib.urlretrieve(remotefilename, localfilename,
-                       lambda nb, bs, fs, url=remotefilename: _pbhook(nb, bs, fs, url, dp))
+    try:
+        urllib.urlretrieve(remotefilename, localfilename,
+                           lambda nb, bs, fs, url=remotefilename: _pbhook(nb, bs, fs, url, dp))
+    except Exception as e:
+        platformtools.dialog_ok('Kodi on Demand', 'Non riesco a scaricare il file d\'installazione da github, questo è probabilmente dovuto ad una mancanza di connessione (o qualcosa impedisce di raggiungere github).\n'
+                                                  'Controlla bene e quando hai risolto riapri KoD.')
+        logger.info('Non sono riuscito a scaricare il file zip')
+        logger.info(e)
+        dp.close()
+        return False
 
     # Lo descomprime
     logger.info("decompressione...")
