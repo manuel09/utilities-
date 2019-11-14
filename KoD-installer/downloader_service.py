@@ -52,7 +52,7 @@ def updateFromZip(message='Installazione in corso...'):
         hash = fixZipGetHash(localfilename)
         logger.info(hash)
 
-        with zipfile.ZipFile(localfilename) as zip:
+        with zipfile.ZipFile(fOpen(localfilename, 'rb')) as zip:
             size = sum([zinfo.file_size for zinfo in zip.filelist])
             cur_size = 0
             for member in zip.infolist():
