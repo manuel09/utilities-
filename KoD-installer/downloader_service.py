@@ -85,7 +85,19 @@ def updateFromZip(message='Installazione in corso...'):
     dp.close()
     xbmc.executebuiltin("UpdateLocalAddons")
 
+    refreshLang()
+
     return hash
+
+
+def refreshLang():
+    language = config.get_localized_string(20001)
+    if language == 'eng':
+        xbmc.executebuiltin("SetGUILanguage(resource.language.it_it)")
+        xbmc.executebuiltin("SetGUILanguage(resource.language.en_en)")
+    else:
+        xbmc.executebuiltin("SetGUILanguage(resource.language.en_en)")
+        xbmc.executebuiltin("SetGUILanguage(resource.language.it_it)")
 
 
 def remove(file):
