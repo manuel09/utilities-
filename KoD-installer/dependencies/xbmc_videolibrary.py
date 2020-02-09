@@ -3,12 +3,14 @@
 # XBMC Library Tools
 # ------------------------------------------------------------
 
+#from builtins import str
+import sys
+PY3 = False
+if sys.version_info[0] >= 3: PY3 = True; unicode = str; unichr = chr; long = int
+    
 import os
 import xbmc
-
-import filetools
-import config, logger
-import platformtools
+from dependencies import config, logger, platformtools, filetools
 
 
 def set_content(content_type, silent=False):
@@ -19,9 +21,7 @@ def set_content(content_type, silent=False):
     """
     continuar = True
     msg_text = ""
-    videolibrarypath = "special://profile/addon_data/plugin.video.kod/videolibrary"
-    # videolibrarypath = config.get_setting("videolibrarypath")
-    logger.info('video '+videolibrarypath)
+    videolibrarypath = config.get_setting("videolibrarypath")
     forced = config.get_setting('videolibrary_kodi_force')
 
     if content_type == 'movie':
@@ -150,7 +150,7 @@ def set_content(content_type, silent=False):
         if sql_videolibrarypath.startswith("special://"):
             sql_videolibrarypath = sql_videolibrarypath.replace('/profile/', '/%/').replace('/home/userdata/', '/%/')
             sep = '/'
-        elif sql_videolibrarypath.startswith("smb://"):
+        elif scrapertools.find_single_match(sql_videolibrarypath, '(^\w+:\/\/)'):
             sep = '/'
         else:
             sep = os.sep
@@ -368,7 +368,7 @@ def add_sources(path):
     # Nodo <name>
     nodo_name = xmldoc.createElement("name")
     sep = os.sep
-    if path.startswith("special://") or path.startswith("smb://"):
+    if path.startswith("special://") or scrapertools.find_single_match(path, '(^\w+:\/\/)'):
         sep = "/"
     name = path
     if path.endswith(sep):
@@ -405,8 +405,8 @@ def ask_set_content(flag, silent=False):
         config.set_setting("videolibrary_kodi", True)
         set_content("movie", silent=True)
         set_content("tvshow", silent=True)
-        add_sources("special://profile/addon_data/plugin.video.kod/videolibrary")
-        add_sources("special://profile/addon_data/plugin.video.kod/downloads")
+        add_sources(config.get_setting("videolibrarypath"))
+        add_sources(config.get_setting("downloadpath"))
 
     if not silent:
         heading = config.get_localized_string(59971)

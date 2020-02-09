@@ -4,9 +4,12 @@ import xbmc, os, shutil
 from dependencies import platformtools, logger, filetools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
-import urllib
+try:
+    import urllib.request as urllib
+except ImportError:
+    import urllib
 
-branch = 'stable'
+branch = 'master'
 user = 'kodiondemand'
 repo = 'addon'
 addonDir = os.path.dirname(os.path.abspath(__file__)) + '/'
@@ -19,7 +22,7 @@ def updateFromZip(message='Installazione in corso...'):
     dp.update(0)
 
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
-    localfilename = os.path.join(xbmc.translatePath("special://home/addons/"), "plugin.video.kod.update.zip").encode('utf-8')
+    localfilename = filetools.join(xbmc.translatePath("special://home/addons/"), "plugin.video.kod.update.zip")
     destpathname = xbmc.translatePath("special://home/addons/")
 
     logger.info("remotefilename=%s" % remotefilename)
@@ -58,7 +61,7 @@ def updateFromZip(message='Installazione in corso...'):
             for member in zip.infolist():
                 zip.extract(member, destpathname)
                 cur_size += member.file_size
-                dp.update(80 + cur_size * 19 / size)
+                dp.update(int(80 + cur_size * 19 / size))
 
     except Exception as e:
         logger.info('Non sono riuscito ad estrarre il file zip')
@@ -159,9 +162,10 @@ def fixZipGetHash(zipFile):
 
 def _pbhook(numblocks, blocksize, filesize, url, dp):
     try:
-        percent = min((numblocks*blocksize*80)/filesize, 100)
-        dp.update(percent)
-    except:
+        percent = min((numblocks*blocksize*80)/filesize, 80)
+        dp.update(int(percent))
+    except Exception as e:
+        logger.error(e)
         percent = 80
         dp.update(percent)
 

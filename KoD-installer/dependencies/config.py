@@ -3,6 +3,11 @@
 # Parámetros de configuración (kodi)
 # ------------------------------------------------------------
 
+#from builtins import str
+import sys
+PY3 = False
+if sys.version_info[0] >= 3: PY3 = True; unicode = str; unichr = chr; long = int
+
 import os
 import re
 
@@ -14,29 +19,6 @@ PLUGIN_NAME = "kod"
 __settings__ = xbmcaddon.Addon(id="plugin.video." + PLUGIN_NAME)
 __language__ = __settings__.getLocalizedString
 
-def get_addon_core():
-    return __settings__
-
-def get_addon_version(with_fix=True):
-    '''
-    Devuelve el número de versión del addon, y opcionalmente número de fix si lo hay
-    '''
-    if with_fix:
-        return __settings__.getAddonInfo('version') + get_addon_version_fix()
-    else:
-        return __settings__.getAddonInfo('version')
-
-def get_addon_version_fix():
-    try:
-        last_fix_json = os.path.join(get_runtime_path(), 'last_fix.json')   # información de la versión fixeada del usuario
-        if os.path.exists(last_fix_json):
-            with open(last_fix_json, 'r') as f: data=f.read(); f.close()
-            fix = re.findall('"fix_version"\s*:\s*(\d+)', data)
-            if fix:
-                return '.fix%s' % fix[0]
-    except:
-        pass
-    return ''
 
 def get_platform(full_version=False):
     """
@@ -56,10 +38,12 @@ def get_platform(full_version=False):
     ret = {}
     codename = {"10": "dharma", "11": "eden", "12": "frodo",
                 "13": "gotham", "14": "helix", "15": "isengard",
-                "16": "jarvis", "17": "krypton", "18": "leia"}
+                "16": "jarvis", "17": "krypton", "18": "leia", 
+                "19": "matrix"}
     code_db = {'10': 'MyVideos37.db', '11': 'MyVideos60.db', '12': 'MyVideos75.db',
                '13': 'MyVideos78.db', '14': 'MyVideos90.db', '15': 'MyVideos93.db',
-               '16': 'MyVideos99.db', '17': 'MyVideos107.db', '18': 'MyVideos116.db'}
+               '16': 'MyVideos99.db', '17': 'MyVideos107.db', '18': 'MyVideos116.db', 
+               '19': 'MyVideos116.db'}
 
     num_version = xbmc.getInfoLabel('System.BuildVersion')
     num_version = re.match("\d+\.\d+", num_version).group(0)
@@ -75,151 +59,6 @@ def get_platform(full_version=False):
         return ret
     else:
         return ret['platform']
-
-
-def is_xbmc():
-    return True
-
-
-def get_videolibrary_support():
-    return True
-
-def get_channel_url(name):
-    def json():
-        try:
-            try:
-                import json
-            except:
-                import simplejson as json
-            ROOT_DIR = xbmc.translatePath(__settings__.getAddonInfo('Path'))
-            LOCAL_FILE = os.path.join(ROOT_DIR, "channels.json")
-            with open(LOCAL_FILE) as f:
-                data = json.load(f)
-                if data[name] is not None:
-                    return data[name]
-                else:
-                    return get_setting("channel_host", name)
-        except:
-            return get_setting("channel_host", name)
-
-    if __settings__.getSetting("use_custom_url") == "true":
-        host = get_setting("channel_host", name)
-        if host:
-            return host
-        else:
-            return json()
-    else:
-        return json()
-
-def get_system_platform():
-    """ fonction: pour recuperer la platform que xbmc tourne """
-    platform = "unknown"
-    if xbmc.getCondVisibility("system.platform.linux"):
-        platform = "linux"
-    elif xbmc.getCondVisibility("system.platform.windows"):
-        platform = "windows"
-    elif xbmc.getCondVisibility("system.platform.osx"):
-        platform = "osx"
-    return platform
-
-def is_autorun_enabled():
-    try:
-        if "xbmc.executebuiltin('XBMC.RunAddon(plugin.video.kod)')" in open(os.path.join(xbmc.translatePath('special://userdata'),'autoexec.py')).read():
-            return True
-        else:
-            return False
-    except:
-        # if error in reading from file autoexec doesnt exists
-        return False 
-
-
-def enable_disable_autorun(is_enabled):
-    # using autoexec.py and not service.py to force autorun
-
-    path = os.path.join(xbmc.translatePath('special://userdata'),'autoexec.py')
-    append_write = 'a' if os.path.exists(path) else 'w'
-
-    if is_enabled is False:
-        with open(path, append_write) as file: 
-            file.write("import xbmc\nxbmc.executebuiltin('XBMC.RunAddon(plugin.video.kod)')")
-    else:
-        file = open(path, "r")
-        old_content = file.read() 
-        new_content = old_content.replace("xbmc.executebuiltin('XBMC.RunAddon(plugin.video.kod)')", "")
-        file.close()
-        with open(path, "w") as file:
-            file.write(new_content)
-    return True
-
-def get_all_settings_addon():
-    # Lee el archivo settings.xml y retorna un diccionario con {id: value}
-    from core import scrapertools
-
-    infile = open(os.path.join(get_data_path(), "settings.xml"), "r")
-    data = infile.read()
-    infile.close()
-
-    ret = {}
-    matches = scrapertools.find_multiple_matches(data, '<setting id="([^"]*)" value="([^"]*)')
-
-    for _id, value in matches:
-        ret[_id] = get_setting(_id)
-
-    return ret
-
-
-def open_settings():
-    settings_pre = get_all_settings_addon()
-    __settings__.openSettings()
-    settings_post = get_all_settings_addon()
-
-    # cb_validate_config (util para validar cambios realizados en el cuadro de dialogo)
-    if settings_post.get('adult_aux_intro_password', None):
-        # Hemos accedido a la seccion de Canales para adultos
-        from platformcode import platformtools
-        if 'adult_password' not in settings_pre:
-            adult_password = set_setting('adult_password', '0000')
-        else:
-            adult_password = settings_pre['adult_password']
-
-        if settings_post['adult_aux_intro_password'] == adult_password:
-            # La contraseña de acceso es correcta
-
-            # Cambio de contraseña
-            if settings_post['adult_aux_new_password1']:
-                if settings_post['adult_aux_new_password1'] == settings_post['adult_aux_new_password2']:
-                    set_setting('adult_password', settings_post['adult_aux_new_password1'])
-                else:
-                    platformtools.dialog_ok(get_localized_string(60305),
-                                            get_localized_string(60306),
-                                            get_localized_string(60307))
-
-        else:
-            platformtools.dialog_ok(get_localized_string(60305), get_localized_string(60309),
-                                    get_localized_string(60310))
-
-            # Deshacer cambios
-            set_setting("adult_mode", settings_pre.get("adult_mode", 0))
-            set_setting("adult_request_password", settings_pre.get("adult_request_password", True))
-
-        # Borramos settings auxiliares
-        set_setting('adult_aux_intro_password', '')
-        set_setting('adult_aux_new_password1', '')
-        set_setting('adult_aux_new_password2', '')
-
-    # si se ha cambiado la ruta de la videoteca llamamos a comprobar directorios para que lo cree y pregunte
-    # automaticamente si configurar la videoteca
-    if settings_pre.get("videolibrarypath", None) != settings_post.get("videolibrarypath", None) or \
-        settings_pre.get("folder_movies", None) != settings_post.get("folder_movies", None) or \
-            settings_pre.get("folder_tvshows", None) != settings_post.get("folder_tvshows", None):
-        verify_directories_created()
-
-    else:
-        # si se ha puesto que se quiere autoconfigurar y se había creado el directorio de la videoteca
-        if not settings_pre.get("videolibrary_kodi", None) and settings_post.get("videolibrary_kodi", None) \
-                and settings_post.get("videolibrary_kodi_flag", None) == 1:
-            from platformcode import xbmc_videolibrary
-            xbmc_videolibrary.ask_set_content(2, silent=True)
 
 
 def get_setting(name, channel="", server="", default=None):
@@ -336,8 +175,8 @@ def set_setting(name, value, channel="", server=""):
 
             __settings__.setSetting(name, value)
 
-        except Exception, ex:
-            from platformcode import logger
+        except Exception as ex:
+            from dependencies import logger
             logger.error("Error al convertir '%s' no se guarda el valor \n%s" % (name, ex))
             return None
 
@@ -348,18 +187,22 @@ def get_localized_string(code):
     dev = __language__(code)
 
     try:
-        dev = dev.encode("utf-8")
+        # Unicode to utf8
+        if isinstance(dev, unicode):
+            dev = dev.encode("utf8")
+            if PY3: dev = dev.decode("utf8")
+
+        # All encodings to utf8
+        elif not PY3 and isinstance(dev, str):
+            dev = unicode(dev, "utf8", errors="replace").encode("utf8")
+        
+        # Bytes encodings to utf8
+        elif PY3 and isinstance(dev, bytes):
+            dev = dev.decode("utf8")
     except:
         pass
 
     return dev
-
-def get_localized_category(categ):
-    categories = {'movie': get_localized_string(30122), 'tvshow': get_localized_string(30123),
-                  'anime': get_localized_string(30124), 'documentary': get_localized_string(30125),
-                  'vos': get_localized_string(30136), 'vosi': get_localized_string(70566), 'adult': get_localized_string(30126),
-                  'direct': get_localized_string(30137), 'torrent': get_localized_string(70015)}
-    return categories[categ] if categ in categories else categ
 
 
 
@@ -393,6 +236,14 @@ def get_data_path():
     return dev
 
 
+def get_icon():
+    return xbmc.translatePath(__settings__.getAddonInfo('icon'))
+
+
+def get_fanart():
+    return xbmc.translatePath(__settings__.getAddonInfo('fanart'))
+
+
 def get_cookie_data():
     import os
     ficherocookies = os.path.join(get_data_path(), 'cookies.dat')
@@ -406,9 +257,7 @@ def get_cookie_data():
 
 # Test if all the required directories are created
 def verify_directories_created():
-    from platformcode import logger
-    from core import filetools
-    from platformcode import xbmc_videolibrary
+    from dependencies import logger, filetools, xbmc_videolibrary
 
     config_paths = [["videolibrarypath", "videolibrary"],
                     ["downloadpath", "downloads"],
@@ -452,7 +301,7 @@ def verify_directories_created():
             filetools.mkdir(content_path)
 
     try:
-        from core import scrapertools
+        from dependencies import scrapertools
         # Buscamos el archivo addon.xml del skin activo
         skindir = filetools.join(xbmc.translatePath("special://home"), 'addons', xbmc.getSkinDir(),
                                  'addon.xml')
