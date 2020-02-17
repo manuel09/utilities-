@@ -10,7 +10,7 @@ if sys.version_info[0] >= 3: PY3 = True; unicode = str; unichr = chr; long = int
     
 import os
 import xbmc
-from dependencies import config, logger, platformtools, filetools
+from dependencies import config, logger, platformtools, filetools, scrapertools
 
 
 def set_content(content_type, silent=False):
@@ -391,8 +391,13 @@ def add_sources(path):
     nodo_video.appendChild(nodo_source)
 
     # Guardamos los cambios
-    filetools.write(SOURCES_PATH,
-                    '\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]))
+    if not PY3:
+        filetools.write(SOURCES_PATH,
+                        '\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]))
+    else:
+        filetools.write(SOURCES_PATH,
+                        b'\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]),
+                        vfs=False)
 
 
 def ask_set_content(flag, silent=False):

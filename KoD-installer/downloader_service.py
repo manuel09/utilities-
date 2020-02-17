@@ -30,7 +30,7 @@ def updateFromZip(message='Installazione in corso...'):
 
     # pulizia preliminare
     remove(localfilename)
-    removeTree(destpathname + "addon-" + branch)
+    removeTree(filetools.join(destpathname, "addon-" + branch))
 
     try:
         urllib.urlretrieve(remotefilename, localfilename,
@@ -79,7 +79,7 @@ def updateFromZip(message='Installazione in corso...'):
     removeTree(addonDir)
     xbmc.sleep(1000)
 
-    rename(destpathname + "addon-" + branch, addonDir)
+    rename(filetools.join(destpathname, "addon-" + branch), addonDir)
 
     logger.info("Cancellando il file zip...")
     remove(localfilename)
@@ -158,7 +158,7 @@ def fixZipGetHash(zipFile):
             f.write(
                 b'\x00\x00')  # Zip file comment length: 0 byte length; tell zip applications to stop reading.
 
-    return str(hash)
+    return hash.decode('utf-8')
 
 def _pbhook(numblocks, blocksize, filesize, url, dp):
     try:
@@ -173,8 +173,8 @@ def _pbhook(numblocks, blocksize, filesize, url, dp):
 def download():
     hash = updateFromZip()
     # se ha scaricato lo zip si trova di sicuro all'ultimo commit
-    localCommitFile = fOpen(addonDir + trackingFile, 'w')
-    localCommitFile.write(hash)
+    localCommitFile = fOpen(addonDir + trackingFile, 'wb')
+    localCommitFile.write(hash.encode('utf-8'))
     localCommitFile.close()
 
 
