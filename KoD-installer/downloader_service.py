@@ -188,8 +188,9 @@ def run():
     t = Thread(target=download)
     t.start()
 
-    xbmc_videolibrary.ask_set_content()
-    config.set_setting('show_once', True)
+    if not config.get_setting('show_once'):
+        xbmc_videolibrary.ask_set_content(silent=False)
+        config.set_setting('show_once', True)
 
     t.join()
 
