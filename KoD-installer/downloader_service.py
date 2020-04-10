@@ -24,13 +24,15 @@ def updateFromZip(message='Installazione in corso...'):
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
     localfilename = filetools.join(xbmc.translatePath("special://home/addons/"), "plugin.video.kod.update.zip")
     destpathname = xbmc.translatePath("special://home/addons/")
+    extractedDir = filetools.join(destpathname, "addon-" + branch)
 
     logger.info("remotefilename=%s" % remotefilename)
     logger.info("localfilename=%s" % localfilename)
+    logger.info('extract dir: ' + extractedDir)
 
     # pulizia preliminare
     remove(localfilename)
-    removeTree(filetools.join(destpathname, "addon-" + branch))
+    removeTree(extractedDir)
 
     try:
         urllib.urlretrieve(remotefilename, localfilename,
@@ -76,10 +78,13 @@ def updateFromZip(message='Installazione in corso...'):
     dp.update(99)
 
     # puliamo tutto
-    removeTree(addonDir)
+    global addonDir
+    if extractedDir != addonDir:
+        removeTree(addonDir)
     xbmc.sleep(1000)
 
-    rename(filetools.join(destpathname, "addon-" + branch), addonDir)
+    rename(extractedDir, 'plugin.video.kod')
+    addonDir = filetools.join(destpathname, 'plugin.video.kod')
 
     logger.info("Cancellando il file zip...")
     remove(localfilename)
@@ -141,9 +146,10 @@ def removeTree(dir):
 
 def rename(dir1, dir2):
     try:
-        filetools.rename(dir1, dir2)
+        filetools.rename(dir1, dir2, silent=True, vfs=False)
     except:
         logger.info('cartella ' + dir1 + ' NON rinominata')
+
 
 def fixZipGetHash(zipFile):
     hash = ''
@@ -173,7 +179,7 @@ def _pbhook(numblocks, blocksize, filesize, url, dp):
 def download():
     hash = updateFromZip()
     # se ha scaricato lo zip si trova di sicuro all'ultimo commit
-    localCommitFile = fOpen(addonDir + trackingFile, 'wb')
+    localCommitFile = fOpen(os.path.join(addonDir, trackingFile), 'wb')
     localCommitFile.write(hash.encode('utf-8'))
     localCommitFile.close()
 
@@ -182,7 +188,7 @@ def run():
     t = Thread(target=download)
     t.start()
 
-    xbmc_videolibrary.ask_set_content(1, config.get_setting('videolibrary_kodi_force'))
+    xbmc_videolibrary.ask_set_content()
     config.set_setting('show_once', True)
 
     t.join()

@@ -2,37 +2,37 @@
 # ------------------------------------------------------------
 # XBMC Library Tools
 # ------------------------------------------------------------
-
-#from builtins import str
+# from builtins import str
 import sys
+
 PY3 = False
 if sys.version_info[0] >= 3: PY3 = True; unicode = str; unichr = chr; long = int
-    
+
 import os
 import xbmc
-from dependencies import config, logger, platformtools, filetools, scrapertools
+from dependencies import filetools, config, logger, platformtools, scrapertools
+from xml.dom import minidom
 
 
-def set_content(content_type, silent=False):
+def set_content(content_type, silent=False, custom=False):
     """
     Procedimiento para auto-configurar la videoteca de kodi con los valores por defecto
     @type content_type: str ('movie' o 'tvshow')
     @param content_type: tipo de contenido para configurar, series o peliculas
     """
+    logger.info()
     continuar = True
     msg_text = ""
     videolibrarypath = config.get_setting("videolibrarypath")
-    forced = config.get_setting('videolibrary_kodi_force')
 
     if content_type == 'movie':
         scraper = [config.get_localized_string(70093), config.get_localized_string(70096)]
-        if forced:
-            seleccion = 0 # tmdb
+        if not custom:
+            seleccion = 0  # tmdb
         else:
             seleccion = platformtools.dialog_select(config.get_localized_string(70094), scraper)
 
-
-    # Instalar The Movie Database
+        # Instalar The Movie Database
         if seleccion == -1 or seleccion == 0:
             if not xbmc.getCondVisibility('System.HasAddon(metadata.themoviedb.org)'):
                 if not silent:
@@ -52,7 +52,6 @@ def set_content(content_type, silent=False):
                 continuar = (install and xbmc.getCondVisibility('System.HasAddon(metadata.themoviedb.org)'))
                 if not continuar:
                     msg_text = config.get_localized_string(60047)
-
             if continuar:
                 xbmc.executebuiltin('xbmc.addon.opensettings(metadata.themoviedb.org)', True)
 
@@ -82,8 +81,8 @@ def set_content(content_type, silent=False):
 
     else:  # SERIES
         scraper = [config.get_localized_string(70098), config.get_localized_string(70093)]
-        if forced:
-            seleccion = 0 # tvdb
+        if not custom:
+            seleccion = 0  # tvdb
         else:
             seleccion = platformtools.dialog_select(config.get_localized_string(70107), scraper)
 
@@ -106,7 +105,7 @@ def set_content(content_type, silent=False):
 
                 continuar = (install and xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'))
                 if not continuar:
-                    msg_text = config.get_localized_string(70099)
+                    msg_text = config.get_localized_string(60049)
             if continuar:
                 xbmc.executebuiltin('xbmc.addon.opensettings(metadata.tvdb.com)', True)
 
@@ -116,7 +115,7 @@ def set_content(content_type, silent=False):
                 continuar = False
                 if not silent:
                     # Preguntar si queremos instalar metadata.tvshows.themoviedb.org
-                    install = platformtools.dialog_yesno(config.get_localized_string(70100))
+                    install = platformtools.dialog_yesno(config.get_localized_string(60050))
                 else:
                     install = True
 
@@ -131,7 +130,7 @@ def set_content(content_type, silent=False):
 
                 continuar = (install and continuar)
                 if not continuar:
-                    msg_text = config.get_localized_string(60047)
+                    msg_text = config.get_localized_string(60051)
             if continuar:
                 xbmc.executebuiltin('xbmc.addon.opensettings(metadata.tvshows.themoviedb.org)', True)
 
@@ -191,12 +190,15 @@ def set_content(content_type, silent=False):
             if seleccion == -1 or seleccion == 0:
                 strScraper = 'metadata.themoviedb.org'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.themoviedb.org/settings.xml")
-            elif seleccion == 1: 
+            elif seleccion == 1:
                 strScraper = 'metadata.universal'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.universal/settings.xml")
+            if not os.path.exists(path_settings):
+                logger.info("%s: %s" % (content_type, path_settings + " doesn't exist"))
+                return continuar
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
-            strSettings = strSettings.replace("\"","\'")
+            strSettings = strSettings.replace("\"", "\'")
             strActualizar = "¿Desea configurar este Scraper en español como opción por defecto para películas?"
             if not videolibrarypath.endswith(sep):
                 videolibrarypath += sep
@@ -207,12 +209,16 @@ def set_content(content_type, silent=False):
             if seleccion == -1 or seleccion == 0:
                 strScraper = 'metadata.tvdb.com'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvdb.com/settings.xml")
-            elif seleccion == 1: 
+            elif seleccion == 1:
                 strScraper = 'metadata.tvshows.themoviedb.org'
-                path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvshows.themoviedb.org/settings.xml")
+                path_settings = xbmc.translatePath(
+                    "special://profile/addon_data/metadata.tvshows.themoviedb.org/settings.xml")
+            if not os.path.exists(path_settings):
+                logger.info("%s: %s" % (content_type, path_settings + " doesn't exist"))
+                return continuar
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
-            strSettings = strSettings.replace("\"","\'")
+            strSettings = strSettings.replace("\"", "\'")
             strActualizar = "¿Desea configurar este Scraper en español como opción por defecto para series?"
             if not videolibrarypath.endswith(sep):
                 videolibrarypath += sep
@@ -252,16 +258,16 @@ def set_content(content_type, silent=False):
 
     if not continuar:
         heading = config.get_localized_string(70102) % content_type
-    elif content_type == 'SERIES' and not xbmc.getCondVisibility(
+    elif content_type == 'tvshow' and not xbmc.getCondVisibility(
             'System.HasAddon(metadata.tvshows.themoviedb.org)'):
         heading = config.get_localized_string(70103) % content_type
         msg_text = config.get_localized_string(60058)
     else:
         heading = config.get_localized_string(70103) % content_type
         msg_text = config.get_localized_string(70104)
-    platformtools.dialog_notification(heading, msg_text, icon=1, time=3000)
 
     logger.info("%s: %s" % (heading, msg_text))
+    return continuar
 
 
 def execute_sql_kodi(sql):
@@ -329,101 +335,187 @@ def execute_sql_kodi(sql):
     return nun_records, records
 
 
-def add_sources(path):
+
+def update_sources(new='', old=''):
     logger.info()
-    from xml.dom import minidom
+    if new == old: return True
 
-    SOURCES_PATH = xbmc.translatePath("special://userdata/sources.xml")
+    try:
+        SOURCES_PATH = xbmc.translatePath("special://userdata/sources.xml")
+        if filetools.isfile(SOURCES_PATH):
+            xmldoc = minidom.parse(SOURCES_PATH)
+        else:
+            xmldoc = minidom.Document()
+            source_nodes = xmldoc.createElement("sources")
 
-    if os.path.exists(SOURCES_PATH):
-        xmldoc = minidom.parse(SOURCES_PATH)
-    else:
-        # Crear documento
-        xmldoc = minidom.Document()
-        nodo_sources = xmldoc.createElement("sources")
+            for type in ['programs', 'video', 'music', 'picture', 'files']:
+                nodo_type = xmldoc.createElement(type)
+                element_default = xmldoc.createElement("default")
+                element_default.setAttribute("pathversion", "1")
+                nodo_type.appendChild(element_default)
+                source_nodes.appendChild(nodo_type)
+            xmldoc.appendChild(source_nodes)
 
-        for type in ['programs', 'video', 'music', 'picture', 'files']:
-            nodo_type = xmldoc.createElement(type)
-            element_default = xmldoc.createElement("default")
-            element_default.setAttribute("pathversion", "1")
-            nodo_type.appendChild(element_default)
-            nodo_sources.appendChild(nodo_type)
-        xmldoc.appendChild(nodo_sources)
+        # collect nodes
+        # nodes = xmldoc.getElementsByTagName("video")
+        video_node = xmldoc.childNodes[0].getElementsByTagName("video")[0]
+        paths_node = video_node.getElementsByTagName("path")
 
-    # Buscamos el nodo video
-    nodo_video = xmldoc.childNodes[0].getElementsByTagName("video")[0]
+        if old:
+            # delete old path
+            for node in paths_node:
+                if node.firstChild.data == old:
+                    parent = node.parentNode
+                    remove = parent.parentNode
+                    remove.removeChild(parent)
 
-    # Buscamos el path dentro de los nodos_path incluidos en el nodo_video
-    nodos_paths = nodo_video.getElementsByTagName("path")
-    list_path = [p.firstChild.data for p in nodos_paths]
-    logger.debug(list_path)
-    if path in list_path:
-        logger.debug("La ruta %s ya esta en sources.xml" % path)
-        return
-    logger.debug("La ruta %s NO esta en sources.xml" % path)
+            # write changes
+            if sys.version_info[0] >= 3:  # PY3
+                filetools.write(SOURCES_PATH,
+                                '\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]))
+            else:
+                filetools.write(SOURCES_PATH,
+                                b'\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]),
+                                vfs=False)
+            logger.debug("The path %s has been removed from sources.xml" % old)
 
-    # Si llegamos aqui es por q el path no esta en sources.xml, asi q lo incluimos
-    nodo_source = xmldoc.createElement("source")
+        if new:
+            # create new path
+            list_path = [p.firstChild.data for p in paths_node]
+            if new in list_path:
+                logger.info("The path %s already exists in sources.xml" % new)
+                return True
+            logger.info("The path %s does not exist in sources.xml" % new)
 
-    # Nodo <name>
-    nodo_name = xmldoc.createElement("name")
-    sep = os.sep
-    if path.startswith("special://") or scrapertools.find_single_match(path, '(^\w+:\/\/)'):
-        sep = "/"
-    name = path
-    if path.endswith(sep):
-        name = path[:-1]
-    nodo_name.appendChild(xmldoc.createTextNode(name.rsplit(sep)[-1]))
-    nodo_source.appendChild(nodo_name)
+            # if the path does not exist we create one
+            source_node = xmldoc.createElement("source")
 
-    # Nodo <path>
-    nodo_path = xmldoc.createElement("path")
-    nodo_path.setAttribute("pathversion", "1")
-    nodo_path.appendChild(xmldoc.createTextNode(path))
-    nodo_source.appendChild(nodo_path)
+            # <name> Node
+            name_node = xmldoc.createElement("name")
+            sep = os.sep
+            if new.startswith("special://") or scrapertools.find_single_match(new, r'(^\w+:\/\/)'):
+                sep = "/"
+            name = new
+            if new.endswith(sep):
+                name = new[:-1]
+            name_node.appendChild(xmldoc.createTextNode(name.rsplit(sep)[-1]))
+            source_node.appendChild(name_node)
 
-    # Nodo <allowsharing>
-    nodo_allowsharing = xmldoc.createElement("allowsharing")
-    nodo_allowsharing.appendChild(xmldoc.createTextNode('true'))
-    nodo_source.appendChild(nodo_allowsharing)
+            # <path> Node
+            path_node = xmldoc.createElement("path")
+            path_node.setAttribute("pathversion", "1")
+            path_node.appendChild(xmldoc.createTextNode(new))
+            source_node.appendChild(path_node)
 
-    # Añadimos <source>  a <video>
-    nodo_video.appendChild(nodo_source)
+            # <allowsharing> Node
+            allowsharing_node = xmldoc.createElement("allowsharing")
+            allowsharing_node.appendChild(xmldoc.createTextNode('true'))
+            source_node.appendChild(allowsharing_node)
 
-    # Guardamos los cambios
-    if not PY3:
-        filetools.write(SOURCES_PATH,
-                        '\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]))
-    else:
-        filetools.write(SOURCES_PATH,
-                        b'\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]),
-                        vfs=False)
+            # Añadimos <source>  a <video>
+            video_node.appendChild(source_node)
+
+            # write changes
+            if sys.version_info[0] >= 3:  # PY3
+                filetools.write(SOURCES_PATH,
+                                '\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]))
+            else:
+                filetools.write(SOURCES_PATH,
+                                b'\n'.join([x for x in xmldoc.toprettyxml().encode("utf-8").splitlines() if x.strip()]),
+                                vfs=False)
+            logger.debug("The path %s has been added to sources.xml" % new)
+        return True
+    except:
+        logger.debug("An error occurred. The path %s has not been added/updated to sources.xml" % old)
+        return False
 
 
-def ask_set_content(flag, silent=False):
+def update(folder_content=config.get_setting("folder_tvshows"), folder=""):
+    """
+    Actualiza la libreria dependiendo del tipo de contenido y la ruta que se le pase.
+
+    @type folder_content: str
+    @param folder_content: tipo de contenido para actualizar, series o peliculas
+    @type folder: str
+    @param folder: nombre de la carpeta a escanear.
+    """
+    logger.info(folder)
+
+    payload = {
+        "jsonrpc": "2.0",
+        "method": "VideoLibrary.Scan",
+        "id": 1
+    }
+
+    if folder:
+        folder = str(folder)
+        videolibrarypath = config.get_videolibrary_config_path()
+
+        if folder.endswith('/') or folder.endswith('\\'):
+            folder = folder[:-1]
+
+        update_path = None
+
+        if videolibrarypath.startswith("special:"):
+            if videolibrarypath.endswith('/'):
+                videolibrarypath = videolibrarypath[:-1]
+            update_path = videolibrarypath + "/" + folder_content + "/" + folder + "/"
+        else:
+            #update_path = filetools.join(videolibrarypath, folder_content, folder) + "/"   # Problemas de encode en "folder"
+            update_path = filetools.join(videolibrarypath, folder_content, ' ').rstrip()
+
+        if not scrapertools.find_single_match(update_path, '(^\w+:\/\/)'):
+            payload["params"] = {"directory": update_path}
+
+    while xbmc.getCondVisibility('Library.IsScanningVideo()'):
+        xbmc.sleep(500)
+
+    # data = get_data(payload)
+
+    xbmc.executebuiltin('XBMC.ReloadSkin()')
+
+def ask_set_content(silent=False):
     logger.info()
-    logger.debug("videolibrary_kodi_flag %s" % config.get_setting("videolibrary_kodi_flag"))
     logger.debug("videolibrary_kodi %s" % config.get_setting("videolibrary_kodi"))
 
-    def do_config():
-        logger.debug("hemos aceptado")
-        config.set_setting("videolibrary_kodi", True)
-        set_content("movie", silent=True)
-        set_content("tvshow", silent=True)
-        add_sources(config.get_setting("videolibrarypath"))
-        add_sources(config.get_setting("downloadpath"))
+    def do_config(custom=False):
+        if set_content("movie", True, custom) and set_content("tvshow", True, custom) and \
+                update_sources(config.get_setting("videolibrarypath")) and \
+                update_sources(config.get_setting("downloadpath")):
+            platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(70104))
+            config.set_setting("videolibrary_kodi", True)
+            update()
+        else:
+            platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80024))
+            config.set_setting("videolibrary_kodi", False)
 
     if not silent:
-        heading = config.get_localized_string(59971)
-        linea1 = config.get_localized_string(70105)
-        linea2 = config.get_localized_string(70106)
-        if platformtools.dialog_yesno(heading, linea1, linea2):
-            do_config()
+        if platformtools.dialog_yesno(config.get_localized_string(20000), config.get_localized_string(80015)):
+            if not platformtools.dialog_yesno(config.get_localized_string(80026), config.get_localized_string(80016),
+                                              "", "", config.get_localized_string(80017),
+                                              config.get_localized_string(80018)):
+                path = platformtools.dialog_browse(3, config.get_localized_string(80019),
+                                                   config.get_setting("videolibrarypath"))
+                if path != "":
+                    config.set_setting("videolibrarypath", path)
+                folder = platformtools.dialog_input(config.get_setting("folder_movies"),
+                                                    config.get_localized_string(80020))
+                if folder != "":
+                    config.set_setting("folder_movies", folder)
+                folder = platformtools.dialog_input(config.get_setting("folder_tvshows"),
+                                                    config.get_localized_string(80021))
+                if folder != "":
+                    config.set_setting("folder_tvshows", folder)
+                config.verify_directories_created()
+                do_config(True)
+            else:
+                platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80027))
+                do_config(False)
         else:
             # no hemos aceptado
+            platformtools.dialog_ok(config.get_localized_string(20000), config.get_localized_string(80022))
             config.set_setting("videolibrary_kodi", False)
 
     else:
-        do_config()
-
-    config.set_setting("videolibrary_kodi_flag", flag)
+        platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80023))
+        do_config(True)

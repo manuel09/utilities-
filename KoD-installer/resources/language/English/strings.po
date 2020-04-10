@@ -17,28 +17,44 @@ msgstr ""
 "Last-Translator: Angedam\n"
 "Language: it_IT\n"
 
-msgctxt "#59971"
-msgid "KOD Auto-configuration"
+msgctxt "#20000"
+msgid "Kodi on Demand"
+msgstr ""
+
+msgctxt "#20001"
+msgid "eng"
 msgstr ""
 
 msgctxt "#60046"
-msgid "TheMovieDB not present.\nInstall it now?"
+msgid "The Movie Database not found. Install it now?"
 msgstr ""
 
 msgctxt "#60047"
-msgid "The Movie Database is not installed."
+msgid "The Movie Database has not been installed"
 msgstr ""
 
 msgctxt "#60048"
-msgid "The TVDB not present.\nInstall it now?"
+msgid "The TVDB not found. Install it now?"
+msgstr ""
+
+msgctxt "#60049"
+msgid "The TVDB has not been installed"
+msgstr ""
+
+msgctxt "#60050"
+msgid "The Movie Database not found. Install it now?"
+msgstr ""
+
+msgctxt "#60051"
+msgid "The Movie Database has not been installed"
 msgstr ""
 
 msgctxt "#60055"
-msgid "Error of provider configuration in BD."
+msgid "Error configuring the information provider in Kodi database"
 msgstr ""
 
 msgctxt "#60058"
-msgid "You need to restart Kodi for the changes to take effect."
+msgid "You need to restart Kodi for the changes to take effect"
 msgstr ""
 
 msgctxt "#70093"
@@ -46,11 +62,11 @@ msgid "The Movie Database"
 msgstr ""
 
 msgctxt "#70094"
-msgid "Select scraper for movies"
+msgid "Select the information provider for movies"
 msgstr ""
 
 msgctxt "#70095"
-msgid "Universal Movie Scraper not present.\nInstall it now?"
+msgid "Universal Movie Scraper not found. Install it now?"
 msgstr ""
 
 msgctxt "#70096"
@@ -58,45 +74,77 @@ msgid "Universal Movie Scraper"
 msgstr ""
 
 msgctxt "#70097"
-msgid "Universal Movie Scraper not installed."
+msgid "Universal Movie Scraper has not been installed"
 msgstr ""
 
 msgctxt "#70098"
 msgid "The TVDB"
 msgstr ""
 
-msgctxt "#70099"
-msgid "The TVDB not installed."
-msgstr ""
-
-msgctxt "#70100"
-msgid "The Movie Database not present.\nInstall it now?"
-msgstr ""
-
 msgctxt "#70101"
-msgid "Error fixing videolibrarypath in BD"
+msgid "Error inserting the video library path in Kodi database"
 msgstr ""
 
 msgctxt "#70102"
-msgid "Videolibrary %s not configured"
+msgid "Video library %s not configured"
 msgstr ""
 
 msgctxt "#70103"
-msgid "Videolibrary %s configured"
+msgid "Video library %s configured"
 msgstr ""
 
 msgctxt "#70104"
-msgid "Congratulations, the Kodi video library has been configured correctly."
-msgstr ""
-
-msgctxt "#70105"
-msgid "Do you want KOD to automatically configure the Kodi library? You will be asked to set up scrapers for movies and series."
-msgstr ""
-
-msgctxt "#70106"
-msgid "If you choose 'No' you can do it later from 'Configuration > Preferences > Paths'."
+msgid "The Kodi video library has been successfully configured"
 msgstr ""
 
 msgctxt "#70107"
-msgid "Select scraper for Tv Shows"
+msgid "Select the information provider for TV shows"
+msgstr ""
+
+msgctxt "#80015"
+msgid "Do you want to configure the Kodi video library?"
+msgstr ""
+
+msgctxt "#80016"
+msgid "Would you like to use custom or default settings?"
+msgstr ""
+
+msgctxt "#80017"
+msgid "Custom"
+msgstr ""
+
+msgctxt "#80018"
+msgid "Default"
+msgstr ""
+
+msgctxt "#80019"
+msgid "Select the video library path"
+msgstr ""
+
+msgctxt "#80020"
+msgid "Folder name for movies"
+msgstr ""
+
+msgctxt "#80021"
+msgid "Folder name for TV shows"
+msgstr ""
+
+msgctxt "#80022"
+msgid "You can configure the Kodi video library later from the Settings menu inside KoD"
+msgstr ""
+
+msgctxt "#80023"
+msgid "You will be asked to choose and configure the information providers for movies and TV shows"
+msgstr ""
+
+msgctxt "#80024"
+msgid "An error has occurred during the configuration of the Kodi video library. Please check the log and try again from the Settings menu inside KoD"
+msgstr ""
+
+msgctxt "#80026"
+msgid "Configuration of Kodi video library"
+msgstr ""
+
+msgctxt "#80027"
+msgid "You will be asked to configure The Movie Database for movies and The TVDB for TV shows"
 msgstr ""
