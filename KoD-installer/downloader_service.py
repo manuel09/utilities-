@@ -23,23 +23,21 @@ def chooseBranch():
     try:
         branches = urllib.urlopen(apiLink).read()
     except Exception as e:
-        platformtools.dialog_ok('Kodi on Demand',
-                                'Non riesco a connettermi a github, questo è probabilmente dovuto ad una mancanza di connessione, oppure github è attualmente offline.\n'
-                                'Controlla bene e quando hai risolto riapri KoD.')
+        platformtools.dialog_ok(config.get_localized_string(20000), config.get_localized_string(80031))
         logger.info(e)
         return False
     branches = json.loads(branches)
-    chDesc = ['stable (per uso quotidiano)', 'master (versione beta, instabile in quanto in sviluppo)']
+    chDesc = [config.get_localized_string(80034), config.get_localized_string(80035)]
     chDesc.extend([b['name'] for b in branches if b['name'] not in ['stable', 'master']])
     chName = ['stable', 'master']
     chName.extend([b['name'] for b in branches if b['name'] not in ['stable', 'master']])
-    sel = platformtools.dialog_select('Scegli il ramo che vuoi installare', chDesc)
+    sel = platformtools.dialog_select(config.get_localized_string(80033), chDesc)
     branch = chName[sel]
     return True
 
 
-def updateFromZip(message='Installazione in corso...'):
-    dp = platformtools.dialog_progress_bg('Kodi on Demand', message)
+def updateFromZip(message=config.get_localized_string(80032)):
+    dp = platformtools.dialog_progress_bg(config.get_localized_string(20000), message)
     dp.update(0)
 
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
@@ -59,8 +57,7 @@ def updateFromZip(message='Installazione in corso...'):
         urllib.urlretrieve(remotefilename, localfilename,
                            lambda nb, bs, fs, url=remotefilename: _pbhook(nb, bs, fs, url, dp))
     except Exception as e:
-        platformtools.dialog_ok('Kodi on Demand', 'Non riesco a connettermi a github, questo è probabilmente dovuto ad una mancanza di connessione, oppure github è attualmente offline.\n'
-                                                  'Controlla bene e quando hai risolto riapri KoD.')
+        platformtools.dialog_ok(config.get_localized_string(20000), config.get_localized_string(80031))
         logger.info('Non sono riuscito a scaricare il file zip')
         logger.info(e)
         dp.close()
