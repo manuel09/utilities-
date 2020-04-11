@@ -29,8 +29,12 @@ def chooseBranch():
         logger.info(e)
         return False
     branches = json.loads(branches)
-    sel = platformtools.dialog_select('Scegli il ramo che vuoi installare', [b['name'] for b in branches])
-    branch = branches[sel]['name']
+    chDesc = ['stable (per uso quotidiano)', 'master (versione beta, instabile in quanto in sviluppo)']
+    chDesc.extend([b['name'] for b in branches if b['name'] not in ['stable', 'master']])
+    chName = ['stable', 'master']
+    chName.extend([b['name'] for b in branches if b['name'] not in ['stable', 'master']])
+    sel = platformtools.dialog_select('Scegli il ramo che vuoi installare', chDesc)
+    branch = chName[sel]
     return True
 
 
