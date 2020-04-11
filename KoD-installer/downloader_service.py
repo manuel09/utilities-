@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import io
-import xbmc, os, shutil
+import xbmc, os, shutil, json
 from dependencies import platformtools, logger, filetools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
@@ -9,12 +9,29 @@ try:
 except ImportError:
     import urllib
 
-branch = 'master'
+branch = 'stable'
 user = 'kodiondemand'
 repo = 'addon'
 addonDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 maxPage = 5  # le api restituiscono 30 commit per volta, quindi se si è rimasti troppo indietro c'è bisogno di andare avanti con le pagine
 trackingFile = "last_commit.txt"
+
+
+def chooseBranch():
+    global branch
+    apiLink = 'https://api.github.com/repos/' + user + '/' + repo + '/branches'
+    try:
+        branches = urllib.urlopen(apiLink).read()
+    except Exception as e:
+        platformtools.dialog_ok('Kodi on Demand',
+                                'Non riesco a connettermi a github, questo è probabilmente dovuto ad una mancanza di connessione, oppure github è attualmente offline.\n'
+                                'Controlla bene e quando hai risolto riapri KoD.')
+        logger.info(e)
+        return False
+    branches = json.loads(branches)
+    sel = platformtools.dialog_select('Scegli il ramo che vuoi installare', [b['name'] for b in branches])
+    branch = branches[sel]['name']
+    return True
 
 
 def updateFromZip(message='Installazione in corso...'):
@@ -38,7 +55,7 @@ def updateFromZip(message='Installazione in corso...'):
         urllib.urlretrieve(remotefilename, localfilename,
                            lambda nb, bs, fs, url=remotefilename: _pbhook(nb, bs, fs, url, dp))
     except Exception as e:
-        platformtools.dialog_ok('Kodi on Demand', 'Non riesco a scaricare il file d\'installazione da github, questo è probabilmente dovuto ad una mancanza di connessione (o qualcosa impedisce di raggiungere github).\n'
+        platformtools.dialog_ok('Kodi on Demand', 'Non riesco a connettermi a github, questo è probabilmente dovuto ad una mancanza di connessione, oppure github è attualmente offline.\n'
                                                   'Controlla bene e quando hai risolto riapri KoD.')
         logger.info('Non sono riuscito a scaricare il file zip')
         logger.info(e)
@@ -185,14 +202,15 @@ def download():
 
 
 def run():
-    t = Thread(target=download)
-    t.start()
+    if chooseBranch():
+        t = Thread(target=download)
+        t.start()
 
-    if not config.get_setting('show_once'):
-        xbmc_videolibrary.ask_set_content(silent=False)
-        config.set_setting('show_once', True)
+        if not config.get_setting('show_once'):
+            xbmc_videolibrary.ask_set_content(silent=False)
+            config.set_setting('show_once', True)
 
-    t.join()
+        t.join()
 
 
 def fOpen(file, mode = 'r'):
