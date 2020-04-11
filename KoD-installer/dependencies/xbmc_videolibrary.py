@@ -335,6 +335,41 @@ def execute_sql_kodi(sql):
     return nun_records, records
 
 
+def check_sources(new_movies_path='', new_tvshows_path=''):
+    def format_path(path):
+        if path.startswith("special://") or '://' in path: sep = '/'
+        else: sep = os.sep
+        if not path.endswith(sep): path += sep
+        return path
+
+    logger.info()
+
+    new_movies_path = format_path(new_movies_path)
+    new_tvshows_path = format_path(new_tvshows_path)
+
+    SOURCES_PATH = xbmc.translatePath("special://userdata/sources.xml")
+    if filetools.isfile(SOURCES_PATH):
+        xmldoc = minidom.parse(SOURCES_PATH)
+
+        video_node = xmldoc.childNodes[0].getElementsByTagName("video")[0]
+        paths_node = video_node.getElementsByTagName("path")
+        list_path = [p.firstChild.data for p in paths_node]
+
+        return new_movies_path in list_path, new_tvshows_path in list_path
+    else:
+        xmldoc = minidom.Document()
+        source_nodes = xmldoc.createElement("sources")
+
+        for type in ['programs', 'video', 'music', 'picture', 'files']:
+            nodo_type = xmldoc.createElement(type)
+            element_default = xmldoc.createElement("default")
+            element_default.setAttribute("pathversion", "1")
+            nodo_type.appendChild(element_default)
+            source_nodes.appendChild(nodo_type)
+        xmldoc.appendChild(source_nodes)
+
+        return False, False
+
 
 def update_sources(new='', old=''):
     logger.info()
