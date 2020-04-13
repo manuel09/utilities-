@@ -111,7 +111,8 @@ def updateFromZip(message=config.get_localized_string(80032)):
     dp.close()
     xbmc.executebuiltin("UpdateLocalAddons")
 
-    refreshLang()
+    # in run()
+    # refreshLang()
 
     return hash
 
@@ -212,6 +213,7 @@ def run():
             config.set_setting('show_once', True)
 
         t.join()
+        refreshLang()
 
 
 def fOpen(file, mode = 'r'):
