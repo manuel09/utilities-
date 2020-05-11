@@ -28,8 +28,8 @@ msgid "Check for updates"
 msgstr "Verifica aggiornamenti"
 
 msgctxt "#30002"
-msgid "Enable adult mode"
-msgstr "Abilita modalità adulti"
+msgid "Touch optimized view"
+msgstr "Vista ottimizzata touch"
 
 msgctxt "#30003"
 msgid "Enable debug logging"
@@ -76,12 +76,12 @@ msgid "Password"
 msgstr "Password"
 
 msgctxt "#30017"
-msgid "Download path*"
-msgstr "Percorso download*"
+msgid "Download path"
+msgstr "Percorso download"
 
 msgctxt "#30018"
-msgid "Download list path*"
-msgstr "Percorso lista downloads*"
+msgid "Download list path"
+msgstr "Percorso lista downloads"
 
 msgctxt "#30019"
 msgid "Channels language"
@@ -108,20 +108,20 @@ msgid "Contextual menu"
 msgstr "Menu contestuale"
 
 msgctxt "#30025"
-msgid "Show KoD settings"
-msgstr "Mostra impostazioni KoD"
+msgid ""
+msgstr ""
 
 msgctxt "#30026"
 msgid "Direct"
-msgstr "Direct"
+msgstr "Diretta"
 
 msgctxt "#30027"
 msgid "SetResolvedUrl"
-msgstr "SetResolvedUrl"
+msgstr "Segnalibro"
 
 msgctxt "#30028"
-msgid "Built-In"
-msgstr "Built-In"
+msgid "Built-in"
+msgstr "Built-in"
 
 msgctxt "#30029"
 msgid "Download and play"
@@ -144,8 +144,8 @@ msgid "Internal Client"
 msgstr "Client Interno"
 
 msgctxt "#30034"
-msgid ": Select the video, or 'Cancel' for all"
-msgstr ": Seleziona il video o 'Annulla' per tutti"
+msgid "Select the video, or 'Cancel' for all"
+msgstr "Seleziona il video o 'Annulla' per tutti"
 
 msgctxt "#30035"
 msgid "ERROR in the Client"
@@ -204,8 +204,8 @@ msgid "Unsopported Server"
 msgstr "Server non supportato"
 
 msgctxt "#30067"
-msgid "Path*"
-msgstr "Percorso*"
+msgid "Path"
+msgstr "Percorso"
 
 msgctxt "#30068"
 msgid "Filter by servers"
@@ -280,8 +280,8 @@ msgid "Documentaries"
 msgstr "Documentari"
 
 msgctxt "#30126"
-msgid "Adult"
-msgstr "Adulti"
+msgid ""
+msgstr ""
 
 msgctxt "#30130"
 msgid "News"
@@ -476,16 +476,16 @@ msgid "Academy Awards"
 msgstr "Premi Oscar"
 
 msgctxt "#30998"
-msgid "Shortcut"
-msgstr "Scorciatoia"
+msgid "Quick menu shortcut"
+msgstr "Scorciatoia menu rapido"
 
 msgctxt "#30999"
-msgid "Assign key to open shortcut"
-msgstr "Assegna tasto scorciatoia"
+msgid "Assign key"
+msgstr "Assegna tasto"
 
 msgctxt "#31000"
-msgid "Remove key to open shortcut"
-msgstr "Rimuovi tasto scorciatoia"
+msgid "Unassign key"
+msgstr "Disassegna tasto"
 
 msgctxt "#50000"
 msgid "Sagas"
@@ -508,16 +508,12 @@ msgid "Path: "
 msgstr "Percorso: "
 
 msgctxt "#50005"
-msgid "Delete This Channel?"
-msgstr "Eliminare Questo Canale?"
+msgid "Delete this channel?"
+msgstr "Eliminare questo canale?"
 
 msgctxt "#59970"
 msgid "Synchronization with Trakt started"
 msgstr "Sincronizzazione con Trakt iniziata"
-
-msgctxt "#59971"
-msgid "Kodi video library configuration"
-msgstr "Configurazione videoteca Kodi"
 
 msgctxt "#59972"
 msgid "Search for: '%s' | Found: %d vídeos | Time: %2.f seconds"
@@ -700,8 +696,8 @@ msgid "Delete movie/channel"
 msgstr "Elimina film/canale"
 
 msgctxt "#60019"
-msgid "Delete this movie"
-msgstr "Elimina questo film"
+msgid "Delete movie"
+msgstr "Elimina film"
 
 msgctxt "#60020"
 msgid "Mark TV show as not watched"
@@ -712,12 +708,12 @@ msgid "Mark TV show as watched"
 msgstr "Segna serie TV come vista"
 
 msgctxt "#60022"
-msgid "Automatically find new episodes: Disable"
-msgstr "Trova automaticamente nuovi episodi: Disattiva"
+msgid "Remove from video library update"
+msgstr "Rimuovi da aggiornamento videoteca"
 
 msgctxt "#60023"
-msgid "Automatically find new episodes: Enable"
-msgstr "Trova automaticamente nuovi episodi: Attiva"
+msgid "Add to video library update"
+msgstr "Aggiungi ad aggiornamento videoteca"
 
 msgctxt "#60024"
 msgid "Delete TV show/channel"
@@ -728,8 +724,8 @@ msgid "Delete TV show"
 msgstr "Elimina serie TV"
 
 msgctxt "#60026"
-msgid "Search for new episodes and update"
-msgstr "Cerca nuovi episodi e aggiorna"
+msgid "KoD settings"
+msgstr "Impostazioni KoD"
 
 msgctxt "#60027"
 msgid "Season %s"
@@ -785,23 +781,23 @@ msgstr "Errore nel canale %s"
 
 msgctxt "#60040"
 msgid "Delete movie"
-msgstr "Rimuovere film"
+msgstr "Elimina film"
 
 msgctxt "#60041"
 msgid "Delete TV show"
-msgstr "Rimuovere serie TV"
+msgstr "Elimina serie TV"
 
 msgctxt "#60042"
-msgid "Delete only the links of %s"
-msgstr "Rimuovere solo i link dei %s"
+msgid "Delete channel %s"
+msgstr "Elimina canale %s"
 
 msgctxt "#60043"
 msgid "Delete %s links of channel %s"
 msgstr "Cancellati %s collegamenti del canale %s"
 
 msgctxt "#60044"
-msgid "Do you want really to delete '%s' from video library?"
-msgstr "Vuoi davvero rimuovere '%s' dalla videoteca?"
+msgid "Do you want really to delete "%s" from video library?"
+msgstr "Vuoi davvero rimuovere "%s" dalla videoteca?"
 
 msgctxt "#60045"
 msgid "Sync with Trakt started"
@@ -880,8 +876,8 @@ msgid "Added episode to the video library..."
 msgstr "Aggiunta episodio alla videoteca..."
 
 msgctxt "#60066"
-msgid "An error has occurred. It has not been possible to add the movie "%s" to the video library"
-msgstr "Si è verificato un errore. Non è stato possibile aggiungere il film "%s" alla videoteca"
+msgid "An error has occurred. The movie "%s" has not been added to the video library"
+msgstr "Si è verificato un errore. Il film "%s" non è stato aggiunto alla videoteca"
 
 msgctxt "#60067"
 msgid "An error has occurred. The TV show "%s" has not been added to the video library. It has not been possible to add any episode"
@@ -892,7 +888,7 @@ msgid "An error has occurred. The TV show "%s" has not been added to the video l
 msgstr "Si è verificato un errore. La serie TV "%s" non è stata aggiunta alla videoteca"
 
 msgctxt "#60069"
-msgid "An error has occurred. The TV show "%s" has not been added completely to the video library"
+msgid "An error has occurred. The TV show "%s" has not been completely added to the video library"
 msgstr "Si è verificato un errore. La serie TV "%s" non è stata aggiunta completamente alla videoteca"
 
 msgctxt "#60070"
@@ -900,7 +896,7 @@ msgid "The TV show "%s" has been added to the video library"
 msgstr "La serie TV "%s" è stata aggiunta alla videoteca"
 
 msgctxt "#60071"
-msgid "Autoplay configuration"
+msgid "AutoPlay configuration"
 msgstr "Configurazione Autoplay"
 
 msgctxt "#60072"
@@ -1008,11 +1004,11 @@ msgid "Downloader %s/%s"
 msgstr "Downloader %s/%s"
 
 msgctxt "#60204"
-msgid "Speed Meter"
+msgid "Speed meter"
 msgstr "Misuratore di velocità"
 
 msgctxt "#60205"
-msgid "File Writer"
+msgid "File writer"
 msgstr "Scrittura File"
 
 msgctxt "#60206"
@@ -1404,8 +1400,8 @@ msgid "The unzipped %s file already exists, or you want to overwrite it.?"
 msgstr "il file %s da decomprimere esiste già, vuoi sovrascriverlo?"
 
 msgctxt "#60305"
-msgid "Adult channels"
-msgstr "Canali per adulti"
+msgid ""
+msgstr ""
 
 msgctxt "#60306"
 msgid "The fields 'New password' and 'Confirm new password' do not match"
@@ -1416,8 +1412,8 @@ msgid "Use 'Preferences' to change your password"
 msgstr "Entra in 'Preferenze' per cambiare la password"
 
 msgctxt "#60308"
-msgid "Adult channels"
-msgstr "Canali para adulti"
+msgid ""
+msgstr ""
 
 msgctxt "#60309"
 msgid "The password is not correct."
@@ -1449,7 +1445,7 @@ msgstr " KB/s "
 
 msgctxt "#60316"
 msgid "MB of "
-msgstr "MB de "
+msgstr "MB di "
 
 msgctxt "#60317"
 msgid "MB"
@@ -1520,8 +1516,8 @@ msgid "Configuration"
 msgstr "Configurazione"
 
 msgctxt "#60334"
-msgid "Password for adult channels"
-msgstr "Password per i canali per adulti"
+msgid ""
+msgstr ""
 
 msgctxt "#60335"
 msgid "Watch in..."
@@ -1560,16 +1556,16 @@ msgid "Information"
 msgstr "Informazione"
 
 msgctxt "#60349"
-msgid "Go to the main menu"
-msgstr "Andare al menu principale"
+msgid "Previous menu"
+msgstr "Menu precedente"
 
 msgctxt "#60350"
 msgid "Search in other channels"
 msgstr "Cerca negli altri canali"
 
 msgctxt "#60351"
-msgid "Set as Homepage"
-msgstr "Impostare come Homepage"
+msgid "Set as main menu"
+msgstr "Imposta come menu principale"
 
 msgctxt "#60352"
 msgid "Add TV show to video library"
@@ -1684,8 +1680,8 @@ msgid "Summary:"
 msgstr "Riassunto:"
 
 msgctxt "#60389"
-msgid "Video library update..."
-msgstr "Aggiornamento videoteca..."
+msgid "Updating "%s" [%s]..."
+msgstr "Aggiornamento "%s" [%s]..."
 
 msgctxt "#60390"
 msgid "AutoPlay configuration"
@@ -2296,8 +2292,8 @@ msgid "Download settings"
 msgstr "Impostazioni download"
 
 msgctxt "#60542"
-msgid "Video library settings"
-msgstr "Impostazioni videoteca"
+msgid "Configure video library"
+msgstr "Configura videoteca"
 
 msgctxt "#60544"
 msgid "More Options"
@@ -2388,8 +2384,8 @@ msgid "Restore video library (strm, nfo and json)"
 msgstr "Ripristina videoteca (strm, nfo e json)"
 
 msgctxt "#60568"
-msgid "Search for new episodes and update video library"
-msgstr "Cerca nuovi episodi ed aggiorna videoteca"
+msgid "Update video library"
+msgstr "Aggiorna videoteca"
 
 msgctxt "#60569"
 msgid " - There are no default settings"
@@ -2424,7 +2420,7 @@ msgid "A saving error occurred"
 msgstr "Si è verificato un errore al salvataggio"
 
 msgctxt "#60581"
-msgid "Restoring the video library"
+msgid "Restoring video library"
 msgstr "Ripristino videoteca"
 
 msgctxt "#60582"
@@ -2448,8 +2444,8 @@ msgid "Restoring movies video library"
 msgstr "Ripristino videoteca film"
 
 msgctxt "#60587"
-msgid "Video library update...."
-msgstr "Aggiornamento videoteca...."
+msgid "Channel configuration"
+msgstr "Configurazione canale"
 
 msgctxt "#60588"
 msgid " - Settings created"
@@ -2492,8 +2488,8 @@ msgid "    Server #%s"
 msgstr "    Server #%s"
 
 msgctxt "#60598"
-msgid "Configuration of video library"
-msgstr "Configurazione della videoteca"
+msgid "Video library configuration"
+msgstr "Configurazione videoteca"
 
 msgctxt "#60600"
 msgid "TV shows"
@@ -2512,16 +2508,16 @@ msgid "When Kodi starts"
 msgstr "All'avvio di Kodi"
 
 msgctxt "#60604"
-msgid "Once a day"
-msgstr "Una volta al giorno"
+msgid "Daily"
+msgstr "Giornaliero"
 
 msgctxt "#60605"
-msgid "At the start of Kodi and once a day"
-msgstr "All'avvio di Kodi e una volta al giorno"
+msgid "When Kodi starts and daily"
+msgstr "All'avvio di Kodi e giornaliero"
 
 msgctxt "#60606"
-msgid "      Wait before updating at startup of Kodi"
-msgstr "      Attendere prima di aggiornare all'avvio di Kodi"
+msgid "      Update waiting time"
+msgstr "      Tempo di attesa aggiornamento"
 
 msgctxt "#60607"
 msgid "When Kodi starts"
@@ -2544,12 +2540,12 @@ msgid "60 sec"
 msgstr "60 sec"
 
 msgctxt "#60613"
-msgid "      Begin scheduled update from"
-msgstr "      Inizia aggiornamento programmato a partire dalle"
+msgid "      Update time"
+msgstr "      Ora aggiornamento"
 
 msgctxt "#60614"
-msgid "      Search for new episodes in active TV shows"
-msgstr "      Cerca nuovi episodi nelle serie TV attive"
+msgid "      Search for new episodes"
+msgstr "      Cerca nuovi episodi"
 
 msgctxt "#60615"
 msgid "Never"
@@ -2560,24 +2556,24 @@ msgid "Always"
 msgstr "Sempre"
 
 msgctxt "#60617"
-msgid "According to new episodes"
-msgstr "Secondo le uscite"
+msgid "Based on airing"
+msgstr "In base all'uscita"
 
 msgctxt "#60618"
-msgid "      Search for content in"
-msgstr "      Esegui ricerca dei contenuti in"
+msgid "      Kodi video library update"
+msgstr "      Aggiornamento libreria di Kodi"
 
 msgctxt "#60619"
-msgid "The folder of each TV show"
-msgstr "La cartella di ogni serie TV"
+msgid "Each TV show"
+msgstr "Per serie TV"
 
 msgctxt "#60620"
 msgid "All video library"
 msgstr "Tutta la videoteca"
 
 msgctxt "#60621"
-msgid "Show links in"
-msgstr "Mostra collegamenti in"
+msgid "Links view"
+msgstr "Visualizzazione collegamenti"
 
 msgctxt "#60622"
 msgid "Normal window"
@@ -2632,8 +2628,8 @@ msgid "0 seg"
 msgstr "0 sec"
 
 msgctxt "#60637"
-msgid "Synchronizing with Trakt"
-msgstr "Sincronizzazione con Trakt"
+msgid "  Synchronizing with Trakt"
+msgstr "  Sincronizzazione con Trakt"
 
 msgctxt "#60638"
 msgid "      After mark as watched the episode"
@@ -2676,8 +2672,8 @@ msgid "Never"
 msgstr "Mai"
 
 msgctxt "#60650"
-msgid "Video library information provider"
-msgstr "Provider informazioni videoteca"
+msgid "  Video library information providers"
+msgstr "  Provider informazioni videoteca"
 
 msgctxt "#60651"
 msgid "      Movies"
@@ -2808,8 +2804,8 @@ msgid "TV show"
 msgstr "Serie TV"
 
 msgctxt "#60683"
-msgid "anime"
-msgstr "anime"
+msgid "Loading streams..."
+msgstr "Caricamento stream..."
 
 msgctxt "#70000"
 msgid "Options"
@@ -2821,11 +2817,11 @@ msgstr "OK"
 
 msgctxt "#70002"
 msgid "Cancel"
-msgstr "Annullare"
+msgstr "Annulla"
 
 msgctxt "#70003"
 msgid "Default"
-msgstr "Default"
+msgstr "Predefinito"
 
 msgctxt "#70004"
 msgid "Loading..."
@@ -3120,12 +3116,16 @@ msgid "Most Viewed"
 msgstr "Più Viste"
 
 msgctxt "#70078"
-msgid "Show only links of "
-msgstr "Mostra solo link di "
+msgid "Show links of "
+msgstr "Mostra link di "
 
 msgctxt "#70079"
-msgid "Remove only links of "
-msgstr "Rimuovere solo i collegamenti di "
+msgid "Delete channel "
+msgstr "Elimina canale "
+
+msgctxt "#70081"
+msgid "The folder "%s" contains other files. Delete it anyway?"
+msgstr "La cartella "%s" contiene altri file. Eliminarla comunque?"
 
 msgctxt "#70082"
 msgid "Global Search"
@@ -3144,16 +3144,16 @@ msgid "Delete TV show"
 msgstr "Elimina serie TV"
 
 msgctxt "#70086"
-msgid "Remove only links of %s"
-msgstr "Rimuovere solo i collegamenti di %s"
+msgid "Delete channel %s"
+msgstr "Elimina canale %s"
 
 msgctxt "#70087"
 msgid "Deleted %s links from canal %s"
-msgstr "Eliminati %s links del canale %s"
+msgstr "Eliminati %s link del canale %s"
 
 msgctxt "#70088"
-msgid "Are you sure you want to delete '%s' from video library?"
-msgstr "Vuoi davvero eliminare '%s' dalla videoteca?"
+msgid "Are you sure you want to delete "%s" from video library?"
+msgstr "Vuoi davvero eliminare "%s" dalla videoteca?"
 
 msgctxt "#70089"
 msgid "Show only links of %s"
@@ -3256,8 +3256,8 @@ msgid "Only until Kodi restarts"
 msgstr "Fino al riavvio di Kodi"
 
 msgctxt "#70115"
-msgid "Request password to open adult channels"
-msgstr "Richiedi password per aprire canali per adulti"
+msgid ""
+msgstr ""
 
 msgctxt "#70116"
 msgid "New password"
@@ -3268,16 +3268,16 @@ msgid "Confirm new password"
 msgstr "Conferma nuova password"
 
 msgctxt "#70118"
-msgid "TV shows folder*"
-msgstr "Cartella serie TV*"
+msgid "TV shows folder"
+msgstr "Cartella serie TV"
 
 msgctxt "#70119"
-msgid "Movies folder*"
-msgstr "Cartella film*"
+msgid "Movies folder"
+msgstr "Cartella film"
 
 msgctxt "#70120"
-msgid "Add KoD content to Kodi video library*"
-msgstr "Aggiungi i contenuti di KoD alla videoteca di Kodi*"
+msgid "Add KoD contents to Kodi video library"
+msgstr "Aggiungi la videoteca di KoD alla libreria di Kodi"
 
 msgctxt "#70121"
 msgid "Activate"
@@ -3304,8 +3304,8 @@ msgid "Customization"
 msgstr "Personalizzazione"
 
 msgctxt "#70128"
-msgid "Infoplus Animation"
-msgstr "Animazione Infoplus"
+msgid "InfoPlus animation"
+msgstr "Animazione InfoPlus"
 
 msgctxt "#70129"
 msgid "Without animation"
@@ -3396,16 +3396,16 @@ msgid "Contextual menu"
 msgstr "Menu contestuale"
 
 msgctxt "#70151"
-msgid "Show Infoplus"
-msgstr "Mostra Infoplus"
+msgid "Show InfoPlus"
+msgstr "Mostra InfoPlus"
 
 msgctxt "#70152"
 msgid "Show ExtendedInfo"
 msgstr "Mostra ExtendedInfo"
 
 msgctxt "#70153"
-msgid "Shortcut"
-msgstr "Scorciatoia"
+msgid ""
+msgstr ""
 
 msgctxt "#70154"
 msgid "TMDB search"
@@ -3716,8 +3716,8 @@ msgid "Add completed downloads to the video library "
 msgstr "Aggiungi download completi alla videoteca"
 
 msgctxt "#70231"
-msgid "Move the downloaded file to the video library"
-msgstr "Sposta i files scaricati nella videoteca"
+msgid "Move downloaded files to the video library"
+msgstr "Sposta file scaricati nella videoteca"
 
 msgctxt "#70232"
 msgid "View downloaded files"
@@ -3852,12 +3852,16 @@ msgid "The data entered is not correct!"
 msgstr "I dati introdotti non sono corretti!"
 
 msgctxt "#70266"
-msgid "The search for% s did not match."
-msgstr "La ricerca di %s non ha dato risultati."
+msgid "The search for %s did not match"
+msgstr "La ricerca di %s non ha dato risultati"
+
+msgctxt "#70268"
+msgid "The TV show "%s" is ended or has been canceled. Would you like to remove it from the video library update?"
+msgstr "La serie TV "%s" è terminata o è stata cancellata. Vuoi rimuoverla dall'aggiornamento della videoteca?"
 
 msgctxt "#70269"
-msgid "Search new episodes now"
-msgstr "Cerca nuovi episodi adesso"
+msgid "Search new episodes"
+msgstr "Cerca nuovi episodi"
 
 msgctxt "#70270"
 msgid "Movies video library"
@@ -3928,8 +3932,8 @@ msgid "Configure search"
 msgstr "Configura ricerca"
 
 msgctxt "#70287"
-msgid "Configure video library"
-msgstr "Configura videoteca"
+msgid "Video library settings"
+msgstr "Impostazioni videoteca"
 
 msgctxt "#70288"
 msgid "Configure downloads"
@@ -5656,8 +5660,8 @@ msgid "Dear user, you seem to have problems with ADSL! We suggest you call your 
 msgstr "Gentile Utente, sembra tu abbia problemi con l'ADSL!  Controlla quanto meno che il modem/router sia acceso e/o il tuo dispositivo connesso.\nKoD NON TROVERA NIENTE finchè non risolverai il problema."
 
 msgctxt "#70722"
-msgid "Dear User, your current DNS do not allow you to reach all sites, ergo, not all Channels will work, we recommend you, to take advantage of more, to set up the DNS.\nSearch your favorite search engine for\n 1. guides on how to choose a free DNS.\n 2. set it up on your device.\nWe recommend the cloudflare DNS 1.1.1.1 and 1.0.0.1\nAlternatively the Google DNS 8.8.8.8 and 8.8.4.4.\nIf you have a VODAFONE station, enter the modem panel and disable 'Secure DNS' before proceeding.\n"
-msgstr "Gentile Utente, i tuoi DNS attuali non ti permettono di raggiungere tutti i siti, ergo, non tutti i Canali funzioneranno, ti consigliamo, per usufruirne di un maggior numero, di impostare i DNS.\nCerca sul tuo motore di ricerca preferito guide su come\n1. scegliere un DNS libero.\n2. impostarlo sul tuo dispositivo.\nNoi ti consigliamo i DNS di cloudflare 1.1.1.1 e 1.0.0.1\nIn alternativa i DNS di Google 8.8.8.8 e 8.8.4.4.\nSe hai una VODAFONE station, entra nel pannello del modem e disattiva la voce 'DNS sicuro' prima di procedere. E Ricordati 'Applica' in fondo alla pagina per salvare le impostazioni...\n"
+msgid "Dear User, you have disabled the DNS override and your current DNS do not allow you to reach all sites, ergo, not all Channels will work, we recommend you, to take advantage of more, to set up the DNS or re-enable the override in settings.\nSearch your favorite search engine for\n 1. guides on how to choose a free DNS.\n 2. set it up on your device.\nWe recommend the cloudflare DNS 1.1.1.1 and 1.0.0.1\nAlternatively the Google DNS 8.8.8.8 and 8.8.4.4.\nIf you have a VODAFONE station, enter the modem panel and disable 'Secure DNS' before proceeding.\n"
+msgstr "Gentile Utente, hai disattivato l'override DNS ed i tuoi DNS attuali non ti permettono di raggiungere tutti i siti, ergo, non tutti i Canali funzioneranno, ti consigliamo, per usufruirne di un maggior numero, di impostare i DNS oppure di riattivare l'override dalle impostazioni.\nCerca sul tuo motore di ricerca preferito guide su come\n1. scegliere un DNS libero.\n2. impostarlo sul tuo dispositivo.\nNoi ti consigliamo i DNS di cloudflare 1.1.1.1 e 1.0.0.1\nIn alternativa i DNS di Google 8.8.8.8 e 8.8.4.4.\nSe hai una VODAFONE station, entra nel pannello del modem e disattiva la voce 'DNS sicuro' prima di procedere. E Ricordati 'Applica' in fondo alla pagina per salvare le impostazioni...\n"
 
 msgctxt "#70723"
 msgid "links in the folder"
@@ -5896,20 +5900,20 @@ msgid "Do you want to call Elementum Settings to temporarily switch to Use Files
 msgstr "Vuoi aprire i settaggi di Elementum per passare temporaneamente a usare i file?"
 
 msgctxt "#70782"
-msgid "Your device is not compatible with the Internal Client, do you want to use Quasar for Torrents?"
-msgstr "Il tuo dispositivo non è compatibile con il Client Interno, Vuoi usare Quasar per i Torrent?"
+msgid "You must install an external Client to take advantage of the torrent support. Do you want to install Elementum?"
+msgstr "Per poter usufruire del supporto torrent devi installare un Client esterno. Vuoi installare Elementum?"
 
 msgctxt "#70783"
-msgid "Quasar installed and configured, enjoy!"
-msgstr "Quasar installato e configurato, buona Visione!"
+msgid "Elementum is installed on your device, but is not active. Do you want to activate it?"
+msgstr "Elementum è installato sul tuo dispositivo, ma non è attivo. Vuoi Attivarlo?"
 
 msgctxt "#70784"
 msgid "Attention!"
 msgstr "Attenzione!"
 
 msgctxt "#70785"
-msgid "Install Quasar"
-msgstr "Installa Quasar"
+msgid "Install Elementum"
+msgstr "Installa Elementum"
 
 msgctxt "#70786"
 msgid "Autostart"
@@ -5924,9 +5928,68 @@ msgid "Logging"
 msgstr "Logging"
 
 msgctxt "#70789"
-msgid "* Change by opening the settings from the KoD main menu"
-msgstr "* Cambia aprendo le impostazioni dal menu principale di KoD"
+msgid ""
+msgstr ""
 
+msgctxt "#70790"
+msgid "RAR download in progress"
+msgstr "Download RAR in corso"
+
+msgctxt "#70791"
+msgid "A RAR file was detected in the download, but you have not installed the UnRAR extractor.\nDo you want to download it anyway?"
+msgstr "Un file RAR è stato rilevato nel download, ma non hai installato l'estrattore UnRAR.\nVuoi scaricarlo in ogni caso?"
+
+msgctxt "#70792"
+msgid "Delete downloaded files?"
+msgstr "Cancellare i file scaricati?"
+
+msgctxt "#70793"
+msgid "Starting extraction..."
+msgstr "Avvio dell'estrazione..."
+
+msgctxt "#70794"
+msgid "Enter the password (Look in %s)"
+msgstr "Inserisci la password (Cerca in %s)"
+
+msgctxt "#70795"
+msgid "Extracted"
+msgstr "Estratto"
+
+msgctxt "#70796"
+msgid "Error opening RAR File"
+msgstr "Errore durante l'apertura del file RAR"
+
+msgctxt "#70797"
+msgid "The RAR file is empty"
+msgstr "Il file RAR è vuoto"
+
+msgctxt "#70798"
+msgid "Or does not contain valid archives"
+msgstr "O non contiene archivi validi"
+
+msgctxt "#70799"
+msgid "Extraction error"
+msgstr "Errore di estrazione"
+
+msgctxt "#70800"
+msgid "Archive with errors"
+msgstr "Archivio con errori"
+
+msgctxt "#70801"
+msgid "Extract without playing"
+msgstr "Estrarre senza riprodurre"
+
+msgctxt "#70802"
+msgid "Wait some minutes..."
+msgstr "Aspetta qualche minuto..."
+
+msgctxt "#70803"
+msgid "Extracting files..."
+msgstr "Estrazione dei files..."
+
+msgctxt "#70804"
+msgid "Next extraction..."
+msgstr "Estrazione successiva..."
 
 # DNS start [ settings and declaration ]
 msgctxt "#707401"
@@ -6154,16 +6217,16 @@ msgid "Folder name for TV shows"
 msgstr "Nome della cartella per le serie TV"
 
 msgctxt "#80022"
-msgid "You can configure the Kodi video library later from the settings menu inside KoD"
-msgstr "Potrai configurare la libreria di Kodi in seguito dal menu impostazioni all'interno di KoD"
+msgid "You can configure the Kodi video library later from the KoD settings"
+msgstr "Potrai configurare la libreria di Kodi in seguito dalle impostazioni di KoD"
 
 msgctxt "#80023"
 msgid "You will be asked to choose and configure the information providers for movies and TV shows"
 msgstr "Ti verrà chiesto di scegliere e configurare i provider delle informazioni per film e serie TV"
 
 msgctxt "#80024"
-msgid "An error has occurred during the configuration of the Kodi video library. Please check the log and try again from the settings menu inside KoD"
-msgstr "Si è verificato un errore durante la configurazione della libreria di Kodi. Si prega di controllare il log e riprovare dal menu impostazioni all'interno di KoD"
+msgid "An error has occurred during the configuration of the Kodi video library. Please check the log and try again from the KoD settings"
+msgstr "Si è verificato un errore durante la configurazione della libreria di Kodi. Si prega di controllare il log e riprovare dalle impostazioni di KoD"
 
 msgctxt "#80025"
 msgid "Cleaning database..."
@@ -6182,8 +6245,8 @@ msgid "The selected folders are already used by the Kodi library. Please change 
 msgstr "Le cartelle selezionate sono già utilizzate dalla libreria di Kodi. Si prega di cambiarle opportunamente"
 
 msgctxt "#80029"
-msgid "The selected folders are already used by the Kodi library. Please change them properly from the settings menu inside KoD"
-msgstr "Le cartelle selezionate sono già utilizzate dalla libreria di Kodi. Si prega di cambiarle opportunamente dal menu impostazioni all'interno di KoD"
+msgid "The selected folders are already used by the Kodi library. Please change them properly from the KoD settings"
+msgstr "Le cartelle selezionate sono già utilizzate dalla libreria di Kodi. Si prega di cambiarle opportunamente dalle impostazioni di KoD"
 
 msgctxt "#80030"
 msgid "The default path and folders will be used. You will be asked to choose and configure the information providers for movies and TV shows"
@@ -6194,8 +6257,8 @@ msgid "Unable to connect to github. This is probably due to a lack of connection
 msgstr "Impossibile connettersi a github. Questo è probabilmente dovuto ad una mancanza di connessione oppure github è attualmente offline. Per favore verifica e riprova"
 
 msgctxt "#80032"
-msgid "Installation in progress..."
-msgstr "Installazione in corso..."
+msgid "Installing..."
+msgstr "Installazione..."
 
 msgctxt "#80033"
 msgid "Choose the version of KoD to install"
@@ -6208,3 +6271,63 @@ msgstr "release (versione stabile)"
 msgctxt "#80035"
 msgid "master (beta version under development)"
 msgstr "master (versione beta in fase di sviluppo)"
+
+msgctxt "#80036"
+msgid "Delete video library"
+msgstr "Elimina videoteca"
+
+msgctxt "#80037"
+msgid "Attention, the entire video library will be deleted. Proceed anyway?"
+msgstr "Attenzione, l'intera videoteca verrà eliminata. Procedere comunque?"
+
+msgctxt "#80038"
+msgid "Deleting video library..."
+msgstr "Eliminazione videoteca..."
+
+msgctxt "#80039"
+msgid "The video library has been deleted"
+msgstr "La videoteca è stata eliminata"
+
+msgctxt "#80040"
+msgid "Add-on updated to commit %s"
+msgstr "Add-on aggiornato al commit %s"
+
+msgctxt "#80041"
+msgid "Latest updates:\n"
+msgstr "Ultimi aggiornamenti:\n"
+
+msgctxt "#80042"
+msgid "Include local episodes when adding a TV shows"
+msgstr "Includere episodi in locale all'aggiunta di una serie TV"
+
+msgctxt "#80043"
+msgid "Attention, in order to watch local episodes you have to configure the Kodi video library from the KoD settings"
+msgstr "Attenzione, per guardare gli episodi in locale devi configurare la libreria di Kodi dalle impostazioni di KoD"
+
+msgctxt "#80044"
+msgid "Do you want to include local episodes for the TV show "%s"?"
+msgstr "Vuoi includere degli episodi in locale per la serie TV "%s"?"
+
+msgctxt "#80045"
+msgid "The folder of the local episodes has to be different from the TV show one in the KoD video library"
+msgstr "La cartella degli episodi in locale deve essere diversa da quella della serie TV nella videoteca di KoD"
+
+msgctxt "#80046"
+msgid "Select the folder containing the local episodes"
+msgstr "Seleziona la cartella contenente gli episodi in locale"
+
+msgctxt "#80047"
+msgid "The TV show "% s" includes local episodes. They will be only removed from the Kodi video library without being deleted"
+msgstr "La serie TV "%s" include degli episodi in locale. Verranno solo rimossi dalla libreria di Kodi senza essere cancellati"
+
+msgctxt "#80048"
+msgid "Add local episodes"
+msgstr "Aggiungi episodi in locale"
+
+msgctxt "#80049"
+msgid "Remove local episodes"
+msgstr "Rimuovi episodi in locale"
+
+msgctxt "#80050"
+msgid "Downloading..."
+msgstr "Download in corso..."

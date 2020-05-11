@@ -36,7 +36,7 @@ def chooseBranch():
     return True
 
 
-def updateFromZip(message=config.get_localized_string(80032)):
+def updateFromZip(message=config.get_localized_string(80050)):
     dp = platformtools.dialog_progress_bg(config.get_localized_string(20000), message)
     dp.update(0)
 
@@ -70,6 +70,8 @@ def updateFromZip(message=config.get_localized_string(80032)):
     if os.path.isfile(localfilename):
         logger.info('il file esiste')
 
+    dp.update(80, config.get_localized_string(20000), config.get_localized_string(80032))
+
     import zipfile
     try:
         hash = fixZipGetHash(localfilename)
@@ -81,7 +83,7 @@ def updateFromZip(message=config.get_localized_string(80032)):
             for member in zip.infolist():
                 zip.extract(member, destpathname)
                 cur_size += member.file_size
-                dp.update(int(80 + cur_size * 19 / size))
+                dp.update(int(80 + cur_size * 15 / size))
 
     except Exception as e:
         logger.info('Non sono riuscito ad estrarre il file zip')
@@ -93,7 +95,7 @@ def updateFromZip(message=config.get_localized_string(80032)):
 
         return False
 
-    dp.update(99)
+    dp.update(95)
 
     # puliamo tutto
     global addonDir
@@ -108,6 +110,7 @@ def updateFromZip(message=config.get_localized_string(80032)):
     remove(localfilename)
 
     dp.update(100)
+    xbmc.sleep(1000)
     dp.close()
     xbmc.executebuiltin("UpdateLocalAddons")
 
