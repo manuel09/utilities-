@@ -218,6 +218,8 @@ def run():
         t.join()
         refreshLang()
 
+        xbmc.executebuiltin( "XBMC.RunScript(special://home/addons/plugin.video.kod/service.py)" )
+
 
 def fOpen(file, mode = 'r'):
     # per android è necessario, su kodi 18, usare FileIO
