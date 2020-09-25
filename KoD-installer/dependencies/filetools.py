@@ -15,7 +15,16 @@ import traceback
 
 from dependencies import scrapertools, logger
 
-xbmc_vfs = False
+xbmc_vfs = True                                                 # False to disable XbmcVFS, True to enable
+if xbmc_vfs:
+    try:
+        import xbmcvfs
+        if not PY3:
+            reload(sys)                                         # Workoround. Review on migration to Python 3
+            sys.setdefaultencoding('utf-8')                     # xbmcvfs demeans the value of defaultencoding. It is reestablished
+        xbmc_vfs = True
+    except:
+        xbmc_vfs = False
 
 samba = None
 # Windows es "mbcs" linux, osx, android es "utf8"
