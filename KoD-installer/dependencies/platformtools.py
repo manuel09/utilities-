@@ -50,19 +50,13 @@ def dialog_notification(heading, message, icon=0, time=5000, sound=True):
         dialog_ok(heading, message)
 
 
-def dialog_yesno(heading, line1, line2="", line3="", nolabel="No", yeslabel="Si", autoclose=0, customlabel=None):
-    # customlabel only on kodi 19
+def dialog_yesno(heading, message, nolabel=config.get_localized_string(70170), yeslabel=config.get_localized_string(30022), autoclose=0, customlabel=None):
     dialog = xbmcgui.Dialog()
-    if config.get_platform() == 'kodi-matrix':
-        if autoclose:
-            return dialog.yesno(heading, makeMessage(line1, line2, line3), nolabel=nolabel, yeslabel=yeslabel, customlabel=customlabel, autoclose=autoclose)
-        else:
-            return dialog.yesno(heading, makeMessage(line1, line2, line3), nolabel=nolabel, yeslabel=yeslabel, customlabel=customlabel)
+    # customlabel only work on kodi 19
+    if PY3 and customlabel:
+        return dialog.yesnocustom(heading, message, customlabel=customlabel, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
     else:
-        if autoclose:
-            return dialog.yesno(heading, makeMessage(line1, line2, line3), nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
-        else:
-            return dialog.yesno(heading, makeMessage(line1, line2, line3), nolabel=nolabel, yeslabel=yeslabel)
+        return dialog.yesno(heading, message, nolabel=nolabel, yeslabel=yeslabel, autoclose=autoclose)
 
 
 def dialog_select(heading, _list):

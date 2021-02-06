@@ -2,7 +2,7 @@
 # ------------------------------------------------------------
 # XBMC Library Tools
 # ------------------------------------------------------------
-# from builtins import str
+
 import sys
 
 PY3 = False
@@ -16,9 +16,9 @@ from xml.dom import minidom
 
 def set_content(content_type, silent=False, custom=False):
     """
-    Procedimiento para auto-configurar la videoteca de kodi con los valores por defecto
+    Procedure to auto-configure the kodi video library with the default values
     @type content_type: str ('movie' o 'tvshow')
-    @param content_type: tipo de contenido para configurar, series o peliculas
+    @param content_type: content type to configure, series or movies
     """
     logger.info()
     continuar = True
@@ -37,15 +37,15 @@ def set_content(content_type, silent=False, custom=False):
         if seleccion == -1 or seleccion == 0:
             if not xbmc.getCondVisibility('System.HasAddon(metadata.themoviedb.org)'):
                 if not silent:
-                    # Preguntar si queremos instalar metadata.themoviedb.org
-                    install = platformtools.dialog_yesno(config.get_localized_string(60046))
+                    # Ask if we want to install metadata.themoviedb.org
+                    install = platformtools.dialog_yesno(config.get_localized_string(60046),'')
                 else:
                     install = True
 
                 if install:
                     try:
-                        # Instalar metadata.themoviedb.org
-                        xbmc.executebuiltin('xbmc.installaddon(metadata.themoviedb.org)', True)
+                        # Install metadata.themoviedb.org
+                        xbmc.executebuiltin('InstallAddon(metadata.themoviedb.org)', True)
                         logger.info("Instalado el Scraper de películas de TheMovieDB")
                     except:
                         pass
@@ -61,14 +61,14 @@ def set_content(content_type, silent=False, custom=False):
             if continuar and not xbmc.getCondVisibility('System.HasAddon(metadata.universal)'):
                 continuar = False
                 if not silent:
-                    # Preguntar si queremos instalar metadata.universal
+                    # Ask if we want to install metadata.universal
                     install = platformtools.dialog_yesno(config.get_localized_string(70095))
                 else:
                     install = True
 
                 if install:
                     try:
-                        xbmc.executebuiltin('xbmc.installaddon(metadata.universal)', True)
+                        xbmc.executebuiltin('InstallAddon(metadata.universal)', True)
                         if xbmc.getCondVisibility('System.HasAddon(metadata.universal)'):
                             continuar = True
                     except:
@@ -91,16 +91,16 @@ def set_content(content_type, silent=False, custom=False):
         if seleccion == -1 or seleccion == 0:
             if not xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'):
                 if not silent:
-                    # Preguntar si queremos instalar metadata.tvdb.com
+                    #Ask if we want to install metadata.tvdb.com
                     install = platformtools.dialog_yesno(config.get_localized_string(60048))
                 else:
                     install = True
 
                 if install:
                     try:
-                        # Instalar metadata.tvdb.com
-                        xbmc.executebuiltin('xbmc.installaddon(metadata.tvdb.com)', True)
-                        logger.info("Instalado el Scraper de series de The TVDB")
+                        # Install metadata.tvdb.com
+                        xbmc.executebuiltin('InstallAddon(metadata.tvdb.com)', True)
+                        logger.info("The TVDB series Scraper installed ")
                     except:
                         pass
 
@@ -115,15 +115,15 @@ def set_content(content_type, silent=False, custom=False):
             if continuar and not xbmc.getCondVisibility('System.HasAddon(metadata.tvshows.themoviedb.org)'):
                 continuar = False
                 if not silent:
-                    # Preguntar si queremos instalar metadata.tvshows.themoviedb.org
-                    install = platformtools.dialog_yesno(config.get_localized_string(60050))
+                    # Ask if we want to install metadata.tvshows.themoviedb.org
+                    install = platformtools.dialog_yesno(config.get_localized_string(60050),'')
                 else:
                     install = True
 
                 if install:
                     try:
-                        # Instalar metadata.tvshows.themoviedb.org
-                        xbmc.executebuiltin('xbmc.installaddon(metadata.tvshows.themoviedb.org)', True)
+                        # Install metadata.tvshows.themoviedb.org
+                        xbmc.executebuiltin('InstallAddon(metadata.tvshows.themoviedb.org)', True)
                         if xbmc.getCondVisibility('System.HasAddon(metadata.tvshows.themoviedb.org)'):
                             continuar = True
                     except:
@@ -140,7 +140,7 @@ def set_content(content_type, silent=False, custom=False):
     if continuar:
         continuar = False
 
-        # Buscamos el idPath
+        # We look for the idPath
         sql = 'SELECT MAX(idPath) FROM path'
         nun_records, records = execute_sql_kodi(sql)
         if nun_records == 1:
@@ -150,7 +150,7 @@ def set_content(content_type, silent=False, custom=False):
         if sql_videolibrarypath.startswith("special://"):
             sql_videolibrarypath = sql_videolibrarypath.replace('/profile/', '/%/').replace('/home/userdata/', '/%/')
             sep = '/'
-        elif scrapertools.find_single_match(sql_videolibrarypath, '(^\w+:\/\/)'):
+        elif scrapertools.find_single_match(sql_videolibrarypath, r'(^\w+:\/\/)'):
             sep = '/'
         else:
             sep = os.sep
@@ -158,7 +158,7 @@ def set_content(content_type, silent=False, custom=False):
         if not sql_videolibrarypath.endswith(sep):
             sql_videolibrarypath += sep
 
-        # Buscamos el idParentPath
+        # We are looking for the idParentPath
         sql = 'SELECT idPath, strPath FROM path where strPath LIKE "%s"' % sql_videolibrarypath
         nun_records, records = execute_sql_kodi(sql)
         if nun_records == 1:
@@ -166,7 +166,7 @@ def set_content(content_type, silent=False, custom=False):
             videolibrarypath = records[0][1][:-1]
             continuar = True
         else:
-            # No existe videolibrarypath en la BD: la insertamos
+            # There is no videolibrarypath in the DB: we insert it
             sql_videolibrarypath = videolibrarypath
             if not sql_videolibrarypath.endswith(sep):
                 sql_videolibrarypath += sep
@@ -184,14 +184,14 @@ def set_content(content_type, silent=False, custom=False):
     if continuar:
         continuar = False
 
-        # Fijamos strContent, strScraper, scanRecursive y strSettings
+        # We set strContent, strScraper, scanRecursive and strSettings
         if content_type == 'movie':
             strContent = 'movies'
             scanRecursive = 2147483647
             if seleccion == -1 or seleccion == 0:
                 strScraper = 'metadata.themoviedb.org'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.themoviedb.org/settings.xml")
-            elif seleccion == 1: 
+            elif seleccion == 1:
                 strScraper = 'metadata.universal'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.universal/settings.xml")
             if not os.path.exists(path_settings):
@@ -200,7 +200,7 @@ def set_content(content_type, silent=False, custom=False):
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
             strSettings = strSettings.replace("\"","\'")
-            strActualizar = "¿Desea configurar este Scraper en español como opción por defecto para películas?"
+            strActualizar = "Do you want to set this Scraper in Spanish as the default option for movies?"
             if not videolibrarypath.endswith(sep):
                 videolibrarypath += sep
             strPath = videolibrarypath + config.get_setting("folder_movies") + sep
@@ -210,7 +210,7 @@ def set_content(content_type, silent=False, custom=False):
             if seleccion == -1 or seleccion == 0:
                 strScraper = 'metadata.tvdb.com'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvdb.com/settings.xml")
-            elif seleccion == 1: 
+            elif seleccion == 1:
                 strScraper = 'metadata.tvshows.themoviedb.org'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvshows.themoviedb.org/settings.xml")
             if not os.path.exists(path_settings):
@@ -219,13 +219,13 @@ def set_content(content_type, silent=False, custom=False):
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
             strSettings = strSettings.replace("\"","\'")
-            strActualizar = "¿Desea configurar este Scraper en español como opción por defecto para series?"
+            strActualizar = "Do you want to configure this Scraper in Spanish as a default option for series?"
             if not videolibrarypath.endswith(sep):
                 videolibrarypath += sep
             strPath = videolibrarypath + config.get_setting("folder_tvshows") + sep
 
         logger.info("%s: %s" % (content_type, strPath))
-        # Comprobamos si ya existe strPath en la BD para evitar duplicados
+        # We check if strPath already exists in the DB to avoid duplicates
         sql = 'SELECT idPath FROM path where strPath="%s"' % strPath
         nun_records, records = execute_sql_kodi(sql)
         sql = ""
@@ -272,12 +272,12 @@ def set_content(content_type, silent=False, custom=False):
 
 def execute_sql_kodi(sql):
     """
-    Ejecuta la consulta sql contra la base de datos de kodi
-    @param sql: Consulta sql valida
+    Run sql query against kodi database
+    @param sql: Valid sql query
     @type sql: str
-    @return: Numero de registros modificados o devueltos por la consulta
+    @return: Number of records modified or returned by the query
     @rtype nun_records: int
-    @return: lista con el resultado de la consulta
+    @return: list with the query result
     @rtype records: list of tuples
     """
     logger.info()
@@ -285,12 +285,12 @@ def execute_sql_kodi(sql):
     nun_records = 0
     records = None
 
-    # Buscamos el archivo de la BBDD de videos segun la version de kodi
+    # We look for the archive of the video database according to the version of kodi
     video_db = config.get_platform(True)['video_db']
     if video_db:
         file_db = filetools.join(xbmc.translatePath("special://userdata/Database"), video_db)
 
-    # metodo alternativo para localizar la BBDD
+    # alternative method to locate the database
     if not file_db or not filetools.exists(file_db):
         file_db = ""
         for f in filetools.listdir(xbmc.translatePath("special://userdata/Database")):
@@ -301,14 +301,14 @@ def execute_sql_kodi(sql):
                 break
 
     if file_db:
-        logger.info("Archivo de BD: %s" % file_db)
+        logger.info("DB file: %s" % file_db)
         conn = None
         try:
             import sqlite3
             conn = sqlite3.connect(file_db)
             cursor = conn.cursor()
 
-            logger.info("Ejecutando sql: %s" % sql)
+            logger.info("Running sql: %s" % sql)
             cursor.execute(sql)
             conn.commit()
 
@@ -322,15 +322,15 @@ def execute_sql_kodi(sql):
                 nun_records = conn.total_changes
 
             conn.close()
-            logger.info("Consulta ejecutada. Registros: %s" % nun_records)
+            logger.info("Query executed. Records: %s" % nun_records)
 
         except:
-            logger.error("Error al ejecutar la consulta sql")
+            logger.error("Error executing sql query")
             if conn:
                 conn.close()
 
     else:
-        logger.debug("Base de datos no encontrada")
+        logger.info("Database not found")
 
     return nun_records, records
 
@@ -408,7 +408,7 @@ def update_sources(new='', old=''):
             filetools.write(SOURCES_PATH, '\n'.join([x for x in xmldoc.toprettyxml().splitlines() if x.strip()]))
         else:
             filetools.write(SOURCES_PATH, '\n'.join([x for x in xmldoc.toprettyxml().splitlines() if x.strip()]), vfs=False)
-        logger.debug("The path %s has been removed from sources.xml" % old)
+        logger.info("The path %s has been removed from sources.xml" % old)
 
     if new:
         # create new path
@@ -451,7 +451,7 @@ def update_sources(new='', old=''):
             filetools.write(SOURCES_PATH, '\n'.join([x for x in xmldoc.toprettyxml().splitlines() if x.strip()]))
         else:
             filetools.write(SOURCES_PATH, '\n'.join([x for x in xmldoc.toprettyxml().splitlines() if x.strip()]), vfs=False)
-        logger.debug("The path %s has been added to sources.xml" % new)
+        logger.info("The path %s has been added to sources.xml" % new)
 
 
 def update(folder_content=config.get_setting("folder_tvshows"), folder=""):
@@ -501,7 +501,7 @@ def update(folder_content=config.get_setting("folder_tvshows"), folder=""):
 
 def ask_set_content(silent=False):
     logger.info()
-    logger.debug("videolibrary_kodi %s" % config.get_setting("videolibrary_kodi"))
+    logger.info("videolibrary_kodi %s" % config.get_setting("videolibrary_kodi"))
 
     def do_config(custom=False):
         if set_content("movie", True, custom) and set_content("tvshow", True, custom):
@@ -517,7 +517,7 @@ def ask_set_content(silent=False):
         # ask to configure Kodi video library
         if platformtools.dialog_yesno(config.get_localized_string(20000), config.get_localized_string(80015)):
             # ask for custom or default settings
-            if not platformtools.dialog_yesno(config.get_localized_string(80026), config.get_localized_string(80016), "", "", config.get_localized_string(80017), config.get_localized_string(80018)):
+            if not platformtools.dialog_yesno(config.get_localized_string(80026), config.get_localized_string(80016), config.get_localized_string(80017), config.get_localized_string(80018)):
                 # input path and folders
                 path = platformtools.dialog_browse(3, config.get_localized_string(80019), config.get_setting("videolibrarypath"))
                 movies_folder = platformtools.dialog_input(config.get_setting("folder_movies"), config.get_localized_string(80020))
