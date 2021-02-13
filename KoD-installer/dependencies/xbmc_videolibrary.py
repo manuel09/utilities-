@@ -14,13 +14,23 @@ from dependencies import filetools, config, logger, platformtools, scrapertools
 from xml.dom import minidom
 
 
+def search_library_path():
+    sql = 'SELECT strPath FROM path WHERE strPath LIKE "special://%/plugin.video.kod/library/" AND idParentPath ISNULL'
+    nun_records, records = execute_sql_kodi(sql)
+    if nun_records >= 1:
+        logger.debug(records[0][0])
+        return records[0][0]
+    return None
+
+
+
 def set_content(content_type, silent=False, custom=False):
     """
     Procedure to auto-configure the kodi video library with the default values
     @type content_type: str ('movie' o 'tvshow')
     @param content_type: content type to configure, series or movies
     """
-    logger.info()
+    logger.debug()
     continuar = True
     msg_text = ""
     videolibrarypath = config.get_setting("videolibrarypath")
@@ -46,7 +56,7 @@ def set_content(content_type, silent=False, custom=False):
                     try:
                         # Install metadata.themoviedb.org
                         xbmc.executebuiltin('InstallAddon(metadata.themoviedb.org)', True)
-                        logger.info("Instalado el Scraper de películas de TheMovieDB")
+                        logger.debug("Instalado el Scraper de películas de TheMovieDB")
                     except:
                         pass
 
@@ -62,7 +72,7 @@ def set_content(content_type, silent=False, custom=False):
                 continuar = False
                 if not silent:
                     # Ask if we want to install metadata.universal
-                    install = platformtools.dialog_yesno(config.get_localized_string(70095))
+                    install = platformtools.dialog_yesno(config.get_localized_string(70095),'')
                 else:
                     install = True
 
@@ -81,37 +91,14 @@ def set_content(content_type, silent=False, custom=False):
                 xbmc.executebuiltin('Addon.OpenSettings(metadata.universal)', True)
 
     else:  # SERIES
-        scraper = [config.get_localized_string(70098), config.get_localized_string(70093)]
+        scraper = [config.get_localized_string(70093), config.get_localized_string(70098)]
         if not custom:
-            seleccion = 0 # tvdb
+            seleccion = 0 # tmdb
         else:
             seleccion = platformtools.dialog_select(config.get_localized_string(70107), scraper)
 
-        # Instalar The TVDB
-        if seleccion == -1 or seleccion == 0:
-            if not xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'):
-                if not silent:
-                    #Ask if we want to install metadata.tvdb.com
-                    install = platformtools.dialog_yesno(config.get_localized_string(60048))
-                else:
-                    install = True
-
-                if install:
-                    try:
-                        # Install metadata.tvdb.com
-                        xbmc.executebuiltin('InstallAddon(metadata.tvdb.com)', True)
-                        logger.info("The TVDB series Scraper installed ")
-                    except:
-                        pass
-
-                continuar = (install and xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'))
-                if not continuar:
-                    msg_text = config.get_localized_string(60049)
-            if continuar:
-                xbmc.executebuiltin('Addon.OpenSettings(metadata.tvdb.com)', True)
-
         # Instalar The Movie Database
-        elif seleccion == 1:
+        if seleccion == -1 or seleccion == 0:
             if continuar and not xbmc.getCondVisibility('System.HasAddon(metadata.tvshows.themoviedb.org)'):
                 continuar = False
                 if not silent:
@@ -134,6 +121,29 @@ def set_content(content_type, silent=False, custom=False):
                     msg_text = config.get_localized_string(60051)
             if continuar:
                 xbmc.executebuiltin('Addon.OpenSettings(metadata.tvshows.themoviedb.org)', True)
+
+        # Instalar The TVDB
+        elif seleccion == 1:
+            if not xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'):
+                if not silent:
+                    #Ask if we want to install metadata.tvdb.com
+                    install = platformtools.dialog_yesno(config.get_localized_string(60048),'')
+                else:
+                    install = True
+
+                if install:
+                    try:
+                        # Install metadata.tvdb.com
+                        xbmc.executebuiltin('InstallAddon(metadata.tvdb.com)', True)
+                        logger.debug("The TVDB series Scraper installed ")
+                    except:
+                        pass
+
+                continuar = (install and xbmc.getCondVisibility('System.HasAddon(metadata.tvdb.com)'))
+                if not continuar:
+                    msg_text = config.get_localized_string(60049)
+            if continuar:
+                xbmc.executebuiltin('Addon.OpenSettings(metadata.tvdb.com)', True)
 
     idPath = 0
     idParentPath = 0
@@ -195,7 +205,7 @@ def set_content(content_type, silent=False, custom=False):
                 strScraper = 'metadata.universal'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.universal/settings.xml")
             if not os.path.exists(path_settings):
-                logger.info("%s: %s" % (content_type, path_settings + " doesn't exist"))
+                logger.debug("%s: %s" % (content_type, path_settings + " doesn't exist"))
                 return continuar
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
@@ -208,13 +218,13 @@ def set_content(content_type, silent=False, custom=False):
             strContent = 'tvshows'
             scanRecursive = 0
             if seleccion == -1 or seleccion == 0:
-                strScraper = 'metadata.tvdb.com'
-                path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvdb.com/settings.xml")
-            elif seleccion == 1:
                 strScraper = 'metadata.tvshows.themoviedb.org'
                 path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvshows.themoviedb.org/settings.xml")
+            elif seleccion == 1:
+                strScraper = 'metadata.tvdb.com'
+                path_settings = xbmc.translatePath("special://profile/addon_data/metadata.tvdb.com/settings.xml")
             if not os.path.exists(path_settings):
-                logger.info("%s: %s" % (content_type, path_settings + " doesn't exist"))
+                logger.debug("%s: %s" % (content_type, path_settings + " doesn't exist"))
                 return continuar
             settings_data = filetools.read(path_settings)
             strSettings = ' '.join(settings_data.split()).replace("> <", "><")
@@ -224,7 +234,7 @@ def set_content(content_type, silent=False, custom=False):
                 videolibrarypath += sep
             strPath = videolibrarypath + config.get_setting("folder_tvshows") + sep
 
-        logger.info("%s: %s" % (content_type, strPath))
+        logger.debug("%s: %s" % (content_type, strPath))
         # We check if strPath already exists in the DB to avoid duplicates
         sql = 'SELECT idPath FROM path where strPath="%s"' % strPath
         nun_records, records = execute_sql_kodi(sql)
@@ -266,7 +276,7 @@ def set_content(content_type, silent=False, custom=False):
         heading = config.get_localized_string(70103) % content_type
         msg_text = config.get_localized_string(70104)
 
-    logger.info("%s: %s" % (heading, msg_text))
+    logger.debug("%s: %s" % (heading, msg_text))
     return continuar
 
 
@@ -500,9 +510,8 @@ def update(folder_content=config.get_setting("folder_tvshows"), folder=""):
 
 
 def ask_set_content(silent=False):
-    logger.info()
-    logger.info("videolibrary_kodi %s" % config.get_setting("videolibrary_kodi"))
-
+    logger.debug()
+    logger.debug("videolibrary_kodi %s" % config.get_setting("videolibrary_kodi"))
     def do_config(custom=False):
         if set_content("movie", True, custom) and set_content("tvshow", True, custom):
             platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(70104))
@@ -535,11 +544,11 @@ def ask_set_content(silent=False):
                         config.set_setting("folder_movies", movies_folder)
                         config.set_setting("folder_tvshows", tvshows_folder)
                         config.verify_directories_created()
-                        do_config(True)
+                        do_config(False)
                 # default path and folders
                 else:
                     platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80030))
-                    do_config(True)
+                    do_config(False)
             # default settings
             else:
                 platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80027))
@@ -550,4 +559,4 @@ def ask_set_content(silent=False):
     # configuration from the settings menu
     else:
         platformtools.dialog_ok(config.get_localized_string(80026), config.get_localized_string(80023))
-        do_config(True)
+        do_config(False)
