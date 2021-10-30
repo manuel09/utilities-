@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 import io
 import xbmc, os, shutil, json
+# functions that on kodi 19 moved to xbmcvfs
+try:
+    import xbmcvfs
+    xbmc.translatePath = xbmcvfs.translatePath
+    xbmc.validatePath = xbmcvfs.validatePath
+    xbmc.makeLegalFilename = xbmcvfs.makeLegalFilename
+except:
+    pass
 from dependencies import platformtools, logger, filetools
 from dependencies import xbmc_videolibrary, config
 from threading import Thread
@@ -32,6 +40,8 @@ def chooseBranch():
     chName = ['stable', 'master']
     chName.extend([b['name'] for b in branches if b['name'] not in ['stable', 'master']])
     sel = platformtools.dialog_select(config.get_localized_string(80033), chDesc)
+    if sel == -1:
+        return False
     branch = chName[sel]
     return True
 
@@ -218,7 +228,7 @@ def run():
         t.join()
         refreshLang()
 
-        xbmc.executebuiltin( "XBMC.RunScript(special://home/addons/plugin.video.kod/service.py)" )
+        xbmc.executebuiltin("RunScript(special://home/addons/plugin.video.kod/service.py)")
 
 
 def fOpen(file, mode = 'r'):
