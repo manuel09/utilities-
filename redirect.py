@@ -123,5 +123,5 @@ def check(folder_file = ''):
 
 if __name__ == "__main__":
 
-    folder_file = raw_input('Inserisci il percorso, con / finale, del file channels.json\nPer default lo script è considerato\nnella root di .kodi/addons/plugin.video.kod/ premi Enter')
+    folder_file = raw_input('Inserisci il percorso, con / finale, del file channels.json\nPer default lo script è considerato\nnella root di .kodi/addons/plugin.video.s4me/ premi Enter')
     check(folder_file)

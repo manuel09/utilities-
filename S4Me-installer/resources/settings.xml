@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting id="videolibrarypath" type="folder" label="30067" default="special://profile/addon_data/plugin.video.kod/videolibrary/" option="writeable"/>
+    <setting id="videolibrarypath" type="folder" label="30067" default="" option="writeable"/>
     <setting id="folder_tvshows" type="text" label="70118" default="Serie TV"/>
     <setting id="folder_movies" type="text" label="70119" default="Film"/>
     <setting id="videolibrary_kodi" type="bool" label="70120" default="false"/>

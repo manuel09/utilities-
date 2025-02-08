@@ -15,7 +15,7 @@ from xml.dom import minidom
 
 
 def search_library_path():
-    sql = 'SELECT strPath FROM path WHERE strPath LIKE "special://%/plugin.video.kod/library/" AND idParentPath ISNULL'
+    sql = 'SELECT strPath FROM path WHERE strPath LIKE "special://%/plugin.video.s4me/library/" AND idParentPath ISNULL'
     nun_records, records = execute_sql_kodi(sql)
     if nun_records >= 1:
         logger.debug(records[0][0])
@@ -349,7 +349,7 @@ def update_sources(new='', old=''):
         name = new
         if new.endswith(sep):
             name = new[:-1]
-        name_node.appendChild(xmldoc.createTextNode(name.rsplit(sep)[-1]))
+        name_node.appendChild(xmldoc.createTextNode(name.rsplit(sep)[-1] + '-' + config.PLUGIN_NAME))
         source_node.appendChild(name_node)
 
         # <path> Node

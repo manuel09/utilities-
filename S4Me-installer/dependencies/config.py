@@ -14,7 +14,7 @@ import re
 import xbmc
 import xbmcaddon
 
-PLUGIN_NAME = "kod"
+PLUGIN_NAME = "s4me"
 
 __settings__ = xbmcaddon.Addon(id="plugin.video." + PLUGIN_NAME)
 __language__ = __settings__.getLocalizedString

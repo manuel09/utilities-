@@ -18,7 +18,7 @@ except ImportError:
     import urllib
 
 branch = 'stable'
-user = 'kodiondemand'
+user = 'stream4me'
 repo = 'addon'
 addonDir = os.path.dirname(os.path.abspath(__file__)) + '/'
 maxPage = 5  # le api restituiscono 30 commit per volta, quindi se si è rimasti troppo indietro c'è bisogno di andare avanti con le pagine
@@ -51,7 +51,7 @@ def updateFromZip(message=config.get_localized_string(80050)):
     dp.update(0)
 
     remotefilename = 'https://github.com/' + user + "/" + repo + "/archive/" + branch + ".zip"
-    localfilename = filetools.join(xbmc.translatePath("special://home/addons/"), "plugin.video.kod.update.zip")
+    localfilename = filetools.join(xbmc.translatePath("special://home/addons/"), "plugin.video.s4me.update.zip")
     destpathname = xbmc.translatePath("special://home/addons/")
     extractedDir = filetools.join(destpathname, "addon-" + branch)
 
@@ -113,8 +113,8 @@ def updateFromZip(message=config.get_localized_string(80050)):
         removeTree(addonDir)
     xbmc.sleep(1000)
 
-    rename(extractedDir, 'plugin.video.kod')
-    addonDir = filetools.join(destpathname, 'plugin.video.kod')
+    rename(extractedDir, 'plugin.video.s4me')
+    addonDir = filetools.join(destpathname, 'plugin.video.s4me')
 
     logger.info("Cancellando il file zip...")
     remove(localfilename)
@@ -228,7 +228,7 @@ def run():
         t.join()
         refreshLang()
 
-        xbmc.executebuiltin("RunScript(special://home/addons/plugin.video.kod/service.py)")
+        xbmc.executebuiltin("RunScript(special://home/addons/plugin.video.s4me/service.py)")
 
 
 def fOpen(file, mode = 'r'):

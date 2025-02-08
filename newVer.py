@@ -22,7 +22,7 @@ os.system('git checkout master -- .')
 
 # patch per il ramo stabile
 dom = parse('addon.xml').getElementsByTagName('addon')[0]
-dom.setAttribute('name', 'Kodi on Demand')
+dom.setAttribute('name', 'Stream4Me')
 req = dom.getElementsByTagName('requires')[0]
 for dip in req.getElementsByTagName('import'):
     if dip.getAttribute('addon') in dep_blacklist:
