@@ -12,7 +12,7 @@ news = dom.getElementsByTagName('news')[0].childNodes[0]._get_wholeText()
 
 # commit nuova versione su master
 os.system('git add addon.xml')
-os.system('git commit -m "KoD ' + version + '"')
+os.system('git commit -m "S4Me ' + version + '"')
 os.system('git push')
 
 # fa il """merge"""
@@ -39,7 +39,7 @@ os.system('git add .')
 newsStripped = ''
 for n in news.split('\n'):
     newsStripped += n.strip() + '\\n'
-commit = 'git commit -m "KoD ' + version + '"' + ' -m "$(echo "' + newsStripped + '")"'
+commit = 'git commit -m "S4Me ' + version + '"' + ' -m "$(echo "' + newsStripped + '")"'
 os.system(commit)
 
 print('tutto pronto, fai un ultimo controllo e poi dai il push')
