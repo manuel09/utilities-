@@ -30,7 +30,7 @@ def log(*args, **kwargs):
     frame = inspect.currentframe().f_back.f_back
     filename = frame.f_code.co_filename
     filename = os.path.basename(filename).split('.')[0]
-    xbmc.log(LOG_FORMAT.format(addname="kodInstaller",
+    xbmc.log(LOG_FORMAT.format(addname="S4meInstaller",
                               filename=filename,
                               line=frame.f_lineno,
                               sep=':' if msg else '',

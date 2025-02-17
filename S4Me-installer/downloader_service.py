@@ -115,6 +115,8 @@ def updateFromZip(message=config.get_localized_string(80050)):
 
     rename(extractedDir, 'plugin.video.s4me')
     addonDir = filetools.join(destpathname, 'plugin.video.s4me')
+    oldAddonDir = filetools.join(destpathname, 'plugin.video.kod')
+    removeTree(oldAddonDir)
 
     logger.info("Cancellando il file zip...")
     remove(localfilename)
