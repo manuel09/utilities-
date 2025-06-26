@@ -22,8 +22,8 @@
     <platform>all</platform>
     <license>GNU GPL v3</license>
     <website>https://stream4me.github.io/</website>
-    <forum>https://github.com/Stream4me/addon/issues</forum>
-    <source>https://github.com/Stream4me/addon</source>
+    <forum>https://github.com/manuel09/addon/issues</forum>
+    <source>https://github.com/manuel09/addon</source>
   </extension>
   <extension point="xbmc.service" library="downloader_service.py" start="login|startup">
   </extension>
